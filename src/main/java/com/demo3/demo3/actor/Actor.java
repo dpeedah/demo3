@@ -1,6 +1,7 @@
 package com.demo3.demo3.actor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -10,11 +11,13 @@ public class Actor {
 
     @Id
     @Column(name="actor_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
 
     public Actor() {
@@ -28,6 +31,7 @@ public class Actor {
     public Long getId() {
         return id;
     }
+
 
 
     public String getFirstName() {
@@ -47,6 +51,14 @@ public class Actor {
     }
 
 
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 
 
 }

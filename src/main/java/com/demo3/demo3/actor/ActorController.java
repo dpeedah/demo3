@@ -1,11 +1,10 @@
 package com.demo3.demo3.actor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,42 @@ public class ActorController {
     }
 
     @GetMapping(path="/byid/{id}")
-    public Optional<Actor> findById(@PathVariable("id") Long actor_id){
+    public Optional<Actor> findActorById(@PathVariable("id") Long actor_id){
         return actorRepo.findById(actor_id);
+    }
+
+    @DeleteMapping(path="/{id}")
+    public void deleteActor(@PathVariable("id") Long actor_id){
+        boolean exists = actorRepo.existsById(actor_id);
+        if (!exists){
+            throw new IllegalStateException("Student with ID of " + actor_id + "does not exist");
+        }
+        actorRepo.deleteById(actor_id);
+    }
+
+    @PostMapping(path = "/create")
+    public @ResponseBody void addActor(@RequestBody Actor actor){
+        Optional<Actor> actorByName = actorRepo.findActorByFirstNameAndLastName(actor.getFirstName(), actor.getLastName());
+        if (actorByName.isPresent()){
+            throw new IllegalStateException("Full name already exists");
+        }
+        //Actor actor1 = new Actor(firstName,lastName);
+
+        actorRepo.save(actor);
+    }
+
+    @Transactional
+    @PutMapping(path ="{id}")
+    public void updateActor(@PathVariable("id") Long actor_id,
+                              @RequestParam(required = false) String name,
+                              @RequestParam (required = false) String lName){
+        Actor actor = actorRepo.findById(actor_id).orElseThrow( () -> new IllegalStateException("Actor with Id" + actor_id + "does not exist"));
+        if  (name != null && name.length() > 0){
+            actor.setFirstName(name);
+        }
+
+        if (lName != null && lName.length() > 0) {
+            actor.setLastName(lName);
+        }
     }
 }
