@@ -5,4 +5,6 @@ import java.util.Optional;
 public interface ActorRepository extends CrudRepository<Actor,Long> {
 
     Optional<Actor> findActorByFirstNameAndLastName(String fname, String lname);
+    Optional<Iterable<Actor>>findActorsByFirstName(String fname);
+    Optional<Iterable<Actor>>findActorsByLastName(String lname);
 }

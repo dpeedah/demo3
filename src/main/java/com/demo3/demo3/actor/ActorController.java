@@ -1,6 +1,7 @@
 package com.demo3.demo3.actor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +30,13 @@ public class ActorController {
     public void deleteActor(@PathVariable("id") Long actor_id){
         boolean exists = actorRepo.existsById(actor_id);
         if (!exists){
-            throw new IllegalStateException("Student with ID of " + actor_id + "does not exist");
+            throw new IllegalStateException("Actor with ID of " + actor_id + "does not exist");
         }
         actorRepo.deleteById(actor_id);
     }
 
     @PostMapping(path = "/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody void addActor(@RequestBody Actor actor){
         Optional<Actor> actorByName = actorRepo.findActorByFirstNameAndLastName(actor.getFirstName(), actor.getLastName());
         if (actorByName.isPresent()){
@@ -47,7 +49,7 @@ public class ActorController {
 
     @Transactional
     @PutMapping(path ="{id}")
-    public void updateActor(@PathVariable("id") Long actor_id,
+    public ResponseEntity<Actor> updateActor(@PathVariable("id") Long actor_id,
                               @RequestParam(required = false) String name,
                               @RequestParam (required = false) String lName){
         Actor actor = actorRepo.findById(actor_id).orElseThrow( () -> new IllegalStateException("Actor with Id" + actor_id + "does not exist"));
@@ -58,5 +60,8 @@ public class ActorController {
         if (lName != null && lName.length() > 0) {
             actor.setLastName(lName);
         }
+
+        final Actor savedActor = actorRepo.save(actor);
+        return ResponseEntity.ok(savedActor);
     }
 }

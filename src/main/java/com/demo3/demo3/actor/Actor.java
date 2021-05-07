@@ -1,5 +1,8 @@
 package com.demo3.demo3.actor;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +23,11 @@ public class Actor {
     @Column(name = "last_name")
     private String lastName;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update")
+    private Date lastUpdate;
+
     public Actor() {
     }
 
@@ -31,6 +39,8 @@ public class Actor {
     public Long getId() {
         return id;
     }
+
+    public Date getLastUpdate(){return lastUpdate;}
 
 
 
