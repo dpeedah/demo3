@@ -1,6 +1,9 @@
 package com.demo3.demo3.category;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="category")
@@ -8,10 +11,15 @@ public class Category {
     @Id
     @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long category_id;
+    private Long categoryId;
 
     @Column(name = "name")
     private String name;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update")
+    private Date lastUpdate;
 
     public Category() {
     }
@@ -20,12 +28,13 @@ public class Category {
         this.name = name;
     }
 
+
     public Long getCategory_id() {
-        return category_id;
+        return categoryId;
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
+    public Date getLastUpdate() {
+        return lastUpdate;
     }
 
     public String getName() {
@@ -39,7 +48,7 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "category_id=" + category_id +
+                "category_id=" + categoryId +
                 ", name='" + name + '\'' +
                 '}';
     }
