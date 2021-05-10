@@ -27,6 +27,12 @@ public class ActorClassTests {
         Actor actor = new Actor("first","last");
         String test = actor.getFirstName();
         assertEquals("first",actor.getFirstName());
+    }
+
+    @Test
+    public void testGetFirstNameNotNull(){
+        Actor actor = new Actor("first","last");
+        String test = actor.getFirstName();
         assertNotNull(actor.getFirstName());
     }
 
