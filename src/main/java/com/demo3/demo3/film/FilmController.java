@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping( path="api/films")
@@ -29,6 +30,17 @@ public class FilmController {
         return filmRepo.findById(film_id);
     }
 
+    @GetMapping(path="/actors_by_film/{id}")
+    public Set<Actor> findActorsByFilm(
+            @PathVariable("id") Long film_id){
+        Set returnSet = null;
+        Film filma = filmRepo.findById(film_id).orElse(null);
+        if(filma != null){
+            returnSet = filma.getAllActors();
+        }
+        return returnSet;
+    }
+
     @DeleteMapping(path="/{id}")
     public void deleteActor(@PathVariable("id") Long film_id){
         boolean exists = filmRepo.existsById(film_id);
@@ -40,8 +52,8 @@ public class FilmController {
 
     @PostMapping(path = "/create")
     public @ResponseBody void addFilm(@RequestBody Film film){
-        Optional<Film> film1 = filmRepo.findFilmByTitle(film.getTitle());
-        if (film1.isPresent()){
+        Film film1 = filmRepo.findFilmByTitle(film.getTitle());
+        if (film1 != null){
             throw new IllegalStateException("Full name already exists");
         }
         //Actor actor1 = new Actor(firstName,lastName);

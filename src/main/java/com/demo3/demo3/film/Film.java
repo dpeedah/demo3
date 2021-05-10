@@ -1,9 +1,11 @@
 package com.demo3.demo3.film;
+import com.demo3.demo3.actor.Actor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "film")
@@ -37,7 +39,26 @@ public class Film {
     @Column(name = "last_update")
     private Date lastUpdate;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    Set<Actor> allActors ;
+
+
+
     public Film() {
+    }
+
+
+    public Set<Actor> getAllActors() {
+        return allActors;
+    }
+
+    public void setAllActors(Set<Actor> allActors) {
+        this.allActors = allActors;
     }
 
     public String getTitle() {

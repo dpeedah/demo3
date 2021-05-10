@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ActorClassTests {
 
@@ -26,7 +26,8 @@ public class ActorClassTests {
     public void testGetFirstName(){
         Actor actor = new Actor("first","last");
         String test = actor.getFirstName();
-        assertTrue(test.equals("first"));
+        assertEquals("first",actor.getFirstName());
+        assertNotNull(actor.getFirstName());
     }
 
     @Test

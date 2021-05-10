@@ -1,5 +1,6 @@
 package com.demo3.demo3.actor;
 
+import com.demo3.demo3.film.Film;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table (name = "actor")
@@ -27,6 +29,9 @@ public class Actor {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update")
     private Date lastUpdate;
+
+    @ManyToMany(mappedBy = "allActors")
+    Set<Film> actedIn;
 
     public Actor() {
     }
