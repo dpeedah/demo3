@@ -56,8 +56,10 @@ public class Actor {
     public void setFirstName(String firstName) {
         if(firstName.isEmpty()){
             throw new IllegalArgumentException("firstName is null");
-        }else{
+        }else if(firstName.matches("[a-zA-Z]+")){
             this.firstName = firstName;
+        }else{
+            throw new IllegalArgumentException("firstName is not a word");
         }
     }
 
@@ -66,7 +68,13 @@ public class Actor {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if(lastName.isEmpty() && lastName.matches("[a-zA-Z]+")){
+            throw new IllegalArgumentException("lastName is null");
+        }else if(lastName.matches("[a-zA-Z]+")){
+            this.lastName = lastName;
+        }else{
+            throw new IllegalArgumentException("lastName is not a word");
+        }
     }
 
 

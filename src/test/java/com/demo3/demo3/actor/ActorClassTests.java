@@ -73,7 +73,7 @@ class ActorClassTests {
     @Test
     public void testSetFirstNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
-                actor.setFirstName("5555");
+                actor.setFirstName("***");
         });
     }
 
@@ -95,7 +95,7 @@ class ActorClassTests {
     @Test
     public void testSetLastNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
-            actor.setFirstName("5555");
+            actor.setFirstName("***");
         });
     }
 
