@@ -18,10 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ActorClassTests {
 
-    //possibly use controller
-    @Autowired
-    private ActorRepository actorRepo;
-
     private static Actor actor;
     private static final String firstName = "Harry";
     private static final String lastName = "Phillips";
@@ -37,20 +33,6 @@ class ActorClassTests {
     void beforeEachTest(){
         actor.setFirstName(firstName);
         actor.setLastName(lastName);
-    }
-
-    @Test
-    public void testGetId(){
-        Optional<Actor> actor = actorRepo.findById(1L);
-        assertTrue(actor.get().getId().equals(1L));
-    }
-
-    @Test
-    public void testGetLastUpdate(){
-        Optional<Actor> actor = actorRepo.findById(1L);
-        Date actorsDate = actor.get().getLastUpdate();
-        Date testDate = Date.from(LocalDateTime.of(2006,02,15,04,34,33,0).toInstant(ZoneOffset.UTC));
-        assertEquals(testDate.compareTo(actorsDate),0);
     }
 
     @Test
