@@ -1,18 +1,30 @@
 package com.demo3.demo3.film;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.Optional;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class FilmClassTests {
+
+    @Autowired
     private FilmRepository filmrepo;
+
     @Test
     public void testFilmId(){
         Optional<Film> film = filmrepo.findById(1L);
         Film rfilm = film.get();
         Long id = rfilm.getId();
+        assertEquals(1L,id);
     }
 
     @Test
