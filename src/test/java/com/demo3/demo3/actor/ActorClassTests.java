@@ -6,15 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -24,19 +20,21 @@ class ActorClassTests {
     @Autowired
     private ActorRepository actorRepo;
 
-    static Actor actor;
+    private static Actor actor;
+    private static final String firstName = "Harry";
+    private static final String lastName = "Phillips";
 
     //before testing starts make the actor
     @BeforeAll
-    static void pretest(){
-        actor = new Actor("first","last");
+    static void beforeAllTests(){
+        actor = new Actor(firstName,lastName);
     }
 
     //before each test set the name back to default incase previous tests changed it
     @BeforeEach
-    void pretest2(){
-        actor.setFirstName("first");
-        actor.setLastName("last");
+    void beforeEachTest(){
+        actor.setFirstName(firstName);
+        actor.setLastName(lastName);
     }
 
     @Test
@@ -55,23 +53,23 @@ class ActorClassTests {
 
     @Test
     public void testGetFirstName(){
-        assertEquals("first",actor.getFirstName());
+        assertEquals(firstName,actor.getFirstName());
     }
 
     @Test
     public void testGetLastName(){
-        assertEquals("last",actor.getLastName());
+        assertEquals(lastName,actor.getLastName());
     }
 
     @Test
     public void testSetFirstName() {
-        actor.setFirstName("test");
-        assertTrue(actor.getFirstName().equals("test"));
+        actor.setFirstName("Changed");
+        assertTrue(actor.getFirstName().equals("Changed"));
     }
 
     @Test
     public void testSetLastName() {
-        actor.setLastName("test");
-        assertTrue(actor.getLastName().equals("test"));
+        actor.setLastName("Changed");
+        assertTrue(actor.getLastName().equals("Changed"));
     }
 }
