@@ -90,10 +90,10 @@ public class Film {
     }
 
     public void setReleaseYear(Long releaseYear) {
-        if (releaseYear <= 3000L && releaseYear<=1800){
+        if (releaseYear >= 3000L && releaseYear<=1800){
             this.releaseYear = releaseYear;
         }else{
-            throw new IllegalArgumentException("aaha");
+            throw new IllegalArgumentException();
         }
     }
 
@@ -110,6 +110,11 @@ public class Film {
     }
 
     public void setLengthMinutes(Long lengthMinutes) {
+        if (lengthMinutes >= 1 && lengthMinutes<=360){
+            this.lengthMinutes = lengthMinutes;
+        }else{
+            throw new IllegalArgumentException();
+        }
         this.lengthMinutes = lengthMinutes;
     }
 
