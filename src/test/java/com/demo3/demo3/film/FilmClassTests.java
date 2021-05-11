@@ -3,9 +3,17 @@ package com.demo3.demo3.film;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class FilmClassTests {
+    private FilmRepository filmrepo;
+    @Test
+    public void testFilmId(){
+        Optional<Film> film = filmrepo.findById(1L);
+        Film rfilm = film.get();
+        Long id = rfilm.getId();
+    }
 
     @Test
     public void testGetTitle(){
@@ -34,6 +42,8 @@ public class FilmClassTests {
         assertEquals(Ratings.NC17,test);
         assertEquals("NC-17",ratingstr);
     }
+
+
 
 
 }

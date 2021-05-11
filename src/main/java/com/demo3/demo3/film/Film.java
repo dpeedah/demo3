@@ -52,6 +52,9 @@ public class Film {
     public Film() {
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public Set<Actor> getAllActors() {
         return allActors;
