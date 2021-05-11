@@ -1,6 +1,9 @@
 package com.demo3.demo3.category;
 
+import com.demo3.demo3.actor.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -10,48 +13,54 @@ import java.util.Optional;
 @RequestMapping(path = "api/categories")
 public class CategoryController {
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepo;
 
     @GetMapping(path="/all")
     public Iterable<Category> getCategories() {
-        return categoryRepository.findAll();
+        return categoryRepo.findAll();
     }
 
-    @GetMapping(path="/get/{id}")
-    public Optional<Category> findCategoryById(@PathVariable("id") Long id) throws Exception {
-        Optional<Category> category = categoryRepository.findById(id);
+    @GetMapping(path="/byid/{id}")
+    public Optional<Category> findCategoryById(@PathVariable("id") Long id){
+        Optional<Category> category = categoryRepo.findById(id);
         if(category.isPresent()){
             return category ;
         }else{
-            throw new Exception("No category with this id");
+            throw new IllegalStateException("Category with Id: " + id + " does not exist");
         }
     }
 
-    @PostMapping(path="/add")
-    public @ResponseBody void addCategory(@RequestParam String name) throws Exception {
-        Category a = new Category(name);
-        if(categoryRepository.findCategoryByName(name).isPresent()){
-            throw new Exception("Category with this name already exists");
-        }else{
-            categoryRepository.save(a);
-        }
-    }
-
-    @DeleteMapping(path="/delete/{id}")
-    public void deleteCategory(@PathVariable("id") Long id) throws Exception {
+    @DeleteMapping(path="/{id}")
+    public void deleteCategory(@PathVariable("id") Long id){
         Optional<Category> check = findCategoryById(id);
         if(check.isPresent()){
-            categoryRepository.deleteById(id);
+            categoryRepo.deleteById(id);
         }else{
-            throw new Exception("No category with this id");
+            throw new IllegalStateException("Category with Id: " + id + " does not exist");
+        }
+    }
+
+    @PostMapping(path="/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public @ResponseBody void addCategory(@RequestBody Category category)                                {
+        Optional<Category> categoryByName = categoryRepo.findCategoryByName(category.getName());
+        if(categoryByName.isPresent()){
+            throw new IllegalStateException("Category with name: " + category.getName() + " already exists" );
+        }else{
+            categoryRepo.save(category);
         }
     }
 
     @Transactional
-    @PutMapping("/modify/{id}")
-    public void modifyCategoryById(@PathVariable("id") Long id, @RequestParam String name){
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalStateException("id not found: " + id));
-        category.setName(name);
+    @PutMapping("{id}")
+    public ResponseEntity<Category> modifyCategoryById(@PathVariable("id") Long id, @RequestParam (required = false) String name){
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new IllegalStateException("Category with Id: " + id + " does not exist"));
+
+        if  (name != null && name.length() > 0){
+            category.setName(name);
+        }
+        final Category savedCategory = categoryRepo.save(category);
+        return ResponseEntity.ok(savedCategory);
     }
 
 }
