@@ -54,7 +54,11 @@ public class Actor {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if(firstName.isEmpty()){
+            throw new IllegalArgumentException("firstName is null");
+        }else{
+            this.firstName = firstName;
+        }
     }
 
     public String getLastName() {
