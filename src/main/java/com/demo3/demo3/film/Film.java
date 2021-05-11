@@ -1,6 +1,5 @@
 package com.demo3.demo3.film;
 import com.demo3.demo3.actor.Actor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -47,7 +46,13 @@ public class Film {
     )
     Set<Actor> allActors ;
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
 
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     public Film() {
     }
@@ -85,7 +90,11 @@ public class Film {
     }
 
     public void setReleaseYear(Long releaseYear) {
-        this.releaseYear = releaseYear;
+        if (releaseYear <= 3000L && releaseYear<=1800){
+            this.releaseYear = releaseYear;
+        }else{
+            throw new IllegalArgumentException("aaha");
+        }
     }
 
     public Long getLanguageId() {
