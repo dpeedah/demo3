@@ -44,9 +44,6 @@ class ActorRepoTests {
         actor.setLastName(lastName);
     }
 
-
-
-
     @Test
     public void testGetId(){
         Optional<Actor> actor = actorRepo.findById(1L);
@@ -74,20 +71,20 @@ class ActorRepoTests {
         assertTrue(actor.isEmpty());
     }
 
-    @Test
-    public void testCreateActor(){
-        Actor actor = new Actor();
-        actor.setFirstName("Harry");
-        actor.setLastName("Phillips");
-        Actor savedActor = actorRepo.save(actor);
-        assertNotNull(actorRepo.findById(savedActor.getId()));
-    }
+//    @Test
+//    public void testCreateActor(){
+//        Actor actor = new Actor();
+//        actor.setFirstName("Harry");
+//        actor.setLastName("Phillips");
+//        Actor savedActor = actorRepo.save(actor);
+//        assertNotNull(actorRepo.findById(savedActor.getId()));
+//    }
 
-    //will test the auto generated lastupdated variable
+//    //will test the auto generated lastupdated variable
 //    @Test
 //    public void testUpdateActor(){
 //        Actor actor = actorRepo.findById(1L).get();
-//        actor.setFirstName("Changed");
+//        actor.setFirstName("PENELOPE");
 //        actorRepo.save(actor);
 //    }
 
