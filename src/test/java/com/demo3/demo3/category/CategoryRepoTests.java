@@ -60,8 +60,7 @@ class CategoryRepoTests {
 
     @Test
     public void findCategoryByNameFail(){
-        assertThrows(IllegalArgumentException.class,()->{
-            Optional<Category> category = categoryRepo.findCategoryByName("Nonexistent");
-        });
+        Optional<Category> category = categoryRepo.findCategoryByName("Nonexistent");
+        assertTrue(category.isEmpty());
     }
 }
