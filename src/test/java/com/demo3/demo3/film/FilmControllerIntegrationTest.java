@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class FilmControllerIntegrationTest {
+class FilmControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,6 +35,9 @@ public class FilmControllerIntegrationTest {
     private Long id = null;
     private Long randomisedKey = ThreadLocalRandom.current().nextLong(1200, 72000);
     private String randomisedKeyStr = String.valueOf(randomisedKey);
+
+
+    @Test
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

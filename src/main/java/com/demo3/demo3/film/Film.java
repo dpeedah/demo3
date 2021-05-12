@@ -110,7 +110,10 @@ public class Film {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description.length() > 3){
+            this.description = description;
+        }
+
     }
 
     public Long getReleaseYear() {
