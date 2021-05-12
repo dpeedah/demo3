@@ -44,6 +44,9 @@ class ActorRepoTests {
         actor.setLastName(lastName);
     }
 
+
+
+
     @Test
     public void testGetId(){
         Optional<Actor> actor = actorRepo.findById(1L);
@@ -67,9 +70,8 @@ class ActorRepoTests {
 
     @Test
     public void testFindActorByFirstNameAndLastNameFail(){
-        assertThrows(IllegalArgumentException.class,()->{
-            Optional<Actor> actor = actorRepo.findActorByFirstNameAndLastName("DOESNT","EXIST");
-        });
+        Optional<Actor> actor = actorRepo.findActorByFirstNameAndLastName("DOESNT","EXIST");
+        assertTrue(actor.isEmpty());
     }
 
     @Test

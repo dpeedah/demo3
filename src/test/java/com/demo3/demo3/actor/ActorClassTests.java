@@ -77,7 +77,7 @@ class ActorClassTests {
     @Test
     public void testSetLastNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
-            actor.setFirstName("***");
+            actor.setLastName("***");
         });
     }
 
