@@ -27,7 +27,6 @@ public class Film {
     private String description = " ";
 
     @Column(name = "release_year")
-    @NotBlank(message = "Release year required")
     @Max(3000)
     @Min(0)
     private Long releaseYear;
@@ -36,7 +35,6 @@ public class Film {
     private Long languageId = 1L;
 
     @Column(name="length")
-    @NotBlank(message = "Length required")
     @Max(3600)
     @Min(1)
     private Long lengthMinutes;
@@ -62,6 +60,7 @@ public class Film {
         this.description = description;
         this.releaseYear = releaseYear;
         this.lengthMinutes = lengthMinutes;
+        this.rating = Ratings.G;
     }
 
     public Film(String title, String description, Long releaseYear, Long languageId, Long lengthMinutes, Ratings rating) {

@@ -13,6 +13,9 @@ public class EnRatingsConverter implements AttributeConverter<Ratings, String> {
 
     @Override
     public Ratings convertToEntityAttribute(final String s) {
+        if (s == null)
+            return null;
+
         return Ratings.fromString(s);
     }
 }

@@ -59,19 +59,21 @@ class FilmControllerIntegrationTest {
     @Test
     public void createFilmValid() throws Exception
     {
+        Film a = new Film("TESTING" + randomisedKeyStr, "A TEST DESC", 2005L, 105L);
+
         MvcResult result= mockMvc.perform( MockMvcRequestBuilders
-                .put("/api/films/create")
-                .content(asJsonString(new Film("TESTING" + randomisedKeyStr, "A TEST DESC", 2005L, 105L)))
+                .post("/api/films/create")
+                .content(asJsonString(a))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("TESTING"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("TESTING"+randomisedKeyStr))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("A TEST DESC"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.releaseYear").value(2005L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.releaseYear").value(2005))
                 .andReturn();
 
-                Long id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-                this.id = id;
+                int newid = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+                this.id = new Long(newid);
 
                 assertTrue(id != null);
 
