@@ -1,6 +1,5 @@
 package com.demo3.demo3.category;
 
-import com.demo3.demo3.actor.Actor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
