@@ -1,8 +1,5 @@
 package com.demo3.demo3.actor;
 
-import com.demo3.demo3.film.Film;
-import com.demo3.demo3.film.FilmRepository;
-import com.demo3.demo3.film.Ratings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +49,7 @@ class ActorRepoTests {
 
     @Test
     public void testGetLastUpdate(){
-        Optional<Actor> actor = actorRepo.findById(1L);
+        Optional<Actor> actor = actorRepo.findById(2L);
         Date actorsDate = actor.get().getLastUpdate();
         Date testDate = Date.from(LocalDateTime.of(2006,02,15,04,34,33,0).toInstant(ZoneOffset.UTC));
         assertEquals(testDate.compareTo(actorsDate),0);
@@ -60,9 +57,9 @@ class ActorRepoTests {
 
     @Test
     public void testFindActorByFirstNameAndLastNameValid(){
-        Optional<Actor> actor = actorRepo.findActorByFirstNameAndLastName("PENELOPE","GUINESS");
-        assertEquals("PENELOPE",actor.get().getFirstName());
-        assertEquals("GUINESS",actor.get().getLastName());
+        Optional<Actor> actor = actorRepo.findActorByFirstNameAndLastName("NICK","WAHLBERG");
+        assertEquals("NICK",actor.get().getFirstName());
+        assertEquals("WAHLBERG",actor.get().getLastName());
     }
 
     @Test
@@ -71,22 +68,27 @@ class ActorRepoTests {
         assertTrue(actor.isEmpty());
     }
 
-//    @Test
-//    public void testCreateActor(){
-//        Actor actor = new Actor();
-//        actor.setFirstName("Harry");
-//        actor.setLastName("Phillips");
-//        Actor savedActor = actorRepo.save(actor);
-//        assertNotNull(actorRepo.findById(savedActor.getId()));
-//    }
+    @Test
+    public void testCreateActor(){
+        Actor actor = new Actor();
+        actor.setFirstName("Harry");
+        actor.setLastName("Phillips");
+        Actor savedActor = actorRepo.save(actor);
+        assertNotNull(actorRepo.findById(savedActor.getId()));
+    }
 
-//    //will test the auto generated lastupdated variable
-//    @Test
-//    public void testUpdateActor(){
-//        Actor actor = actorRepo.findById(1L).get();
-//        actor.setFirstName("PENELOPE");
-//        actorRepo.save(actor);
-//    }
+    //will test the auto generated lastupdated variable
+    @Test
+    public void testUpdateActor(){
+        Actor actor = actorRepo.findById(1L).get();
+        LocalDateTime ldtNow = LocalDateTime.now();
+        ZonedDateTime zdt = ldtNow.atZone(ZoneId.from(ZoneOffset.UTC));
+        Date testDatenow = Date.from(zdt.toInstant());
+        actor.setFirstName("TEST");
+        actorRepo.save(actor);
+        actor = actorRepo.findById(1L).get();
+        assertEquals(testDatenow.compareTo(actor.getLastUpdate()),1);
+    }
 
 
 
