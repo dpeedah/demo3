@@ -3,7 +3,7 @@ package com.demo3.demo3.film;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -94,9 +94,8 @@ public class FilmControllerIntegrationTest {
 
     @Test
     public void getFilmValid() throws Exception {
-        String idstr = String.valueOf(this.id);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/films/{id}",20L))
-                .andExpect(status().isAccepted()).andExpect(MockMvcResultMatchers.jsonPath(("$.id")).value(idstr));
+                .andExpect(status().isAccepted()).andExpect(MockMvcResultMatchers.jsonPath(("$.id")).value(20L));
     }
 
     @Test

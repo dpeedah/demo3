@@ -1,12 +1,12 @@
 package com.demo3.demo3.film;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FilmClassTests {
@@ -36,17 +36,19 @@ public class FilmClassTests {
         Film film = new Film();
         film.setDescription("5555");
         String test = film.getDescription();
-        assertEquals(null,test);
+        assertNull(test);
     }
 
     // An invalid case where the description given is empty, but the current description is valid,
     // an illegal argument exception is returned as you are not replacing with a valid description
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testDescEmpty(){
-        Film film = new Film();
-        film.setDescription("Valid description!");
-        film.setDescription("");
-        String test = film.getDescription();
+        assertThrows(IllegalArgumentException.class,()->{
+            Film film = new Film();
+            film.setDescription("Valid description!");
+            film.setDescription("");
+            String test = film.getDescription();
+        });
     }
 
     @Test
@@ -57,10 +59,13 @@ public class FilmClassTests {
         assertEquals(2005L,newyear);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testYearInvalid(){
-        Film film = new Film();
-        film.setReleaseYear(45000L);
+        assertThrows(IllegalArgumentException.class,()->{
+            Film film = new Film();
+            film.setReleaseYear(45000L);
+        });
+
     }
 
     //valid test utilising a valid length for a movie
@@ -74,13 +79,15 @@ public class FilmClassTests {
 
     // after setting a valid length, an invalid string given afterwards should result in the same
     // length being present, and being replaced, should not change current length
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testLengthEmpty(){
         Film film = new Film();
         film.setLengthMinutes(77L);
         Long newlength = film.getLengthMinutes();
         assertEquals(77L,newlength);
-        film.setLengthMinutes(-2L);
+        assertThrows(IllegalArgumentException.class,()->{
+            film.setLengthMinutes(-2L);
+        });
         newlength = film.getLengthMinutes();
         assertEquals(77L,newlength);
 
@@ -88,10 +95,12 @@ public class FilmClassTests {
 
     //Invalid length of a single movie (No movie is 10 Hours long).
     // Setting a length when no length is currently present returns an exception
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testLengthInvalid(){
-        Film film = new Film();
-        film.setLengthMinutes(600L);
+        assertThrows(IllegalArgumentException.class,()->{
+            Film film = new Film();
+            film.setLengthMinutes(600L);
+        });
     }
 
     @Test
