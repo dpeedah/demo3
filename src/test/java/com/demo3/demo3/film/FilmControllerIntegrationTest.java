@@ -3,6 +3,8 @@ package com.demo3.demo3.film;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +34,7 @@ class FilmControllerIntegrationTest {
     private ObjectMapper mapper;
 
 
-    private Long id = null;
+    private static Long id;
     private Long randomisedKey = ThreadLocalRandom.current().nextLong(1200, 72000);
     private String randomisedKeyStr = String.valueOf(randomisedKey);
 
@@ -57,6 +59,7 @@ class FilmControllerIntegrationTest {
     }
 
     @Test
+    @Before
     public void createFilmValid() throws Exception
     {
         Film a = new Film("TESTING" + randomisedKeyStr, "A TEST DESC", 2005L, 105L);
@@ -104,6 +107,7 @@ class FilmControllerIntegrationTest {
     }
 
     @Test
+    @After
     public void deleteFilm() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders.delete("/api/films/{id}", this.id) )
