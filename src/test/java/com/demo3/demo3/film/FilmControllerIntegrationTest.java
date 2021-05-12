@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = FilmController.class)
-public class FilmControllerTests {
+public class FilmControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -67,6 +67,18 @@ public class FilmControllerTests {
 
                 Long id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
                 this.id = id;
+
+    }
+
+    @Test
+    public void createFilmNull() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .put("/api/films/create")
+                .content(asJsonString(new Film()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
 
     }
 
