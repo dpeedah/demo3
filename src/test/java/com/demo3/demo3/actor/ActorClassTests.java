@@ -1,5 +1,6 @@
 package com.demo3.demo3.actor;
 
+import com.demo3.demo3.film.Film;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class ActorClassTests {
-
-    @Autowired
-    private ActorRepository actorRepo;
 
     private static Actor actor;
     private static final String firstName = "Harry";
@@ -38,20 +36,6 @@ class ActorClassTests {
     }
 
     @Test
-    public void testGetId(){
-        Optional<Actor> actor = actorRepo.findById(1L);
-        assertTrue(actor.get().getId().equals(1L));
-    }
-
-    @Test
-    public void testGetLastUpdate(){
-        Optional<Actor> actor = actorRepo.findById(1L);
-        Date actorsDate = actor.get().getLastUpdate();
-        Date testDate = Date.from(LocalDateTime.of(2006,02,15,04,34,33,0).toInstant(ZoneOffset.UTC));
-        assertEquals(testDate.compareTo(actorsDate),0);
-    }
-
-    @Test
     public void testGetFirstName(){
         assertEquals(firstName,actor.getFirstName());
     }
@@ -62,14 +46,56 @@ class ActorClassTests {
     }
 
     @Test
-    public void testSetFirstName() {
+    public void testSetFirstNameValid() {
         actor.setFirstName("Changed");
         assertTrue(actor.getFirstName().equals("Changed"));
     }
 
+    // An invalid case where first name is just an integer or real value
     @Test
-    public void testSetLastName() {
+    public void testSetFirstNameInvalid(){
+        assertThrows(IllegalArgumentException.class,()->{
+                actor.setFirstName("***");
+        });
+    }
+
+    // An invalid case where first name is empty
+    @Test
+    public void testSetFirstNameEmpty(){
+        assertThrows(IllegalArgumentException.class,()->{
+            actor.setFirstName("");
+        });
+    }
+
+    @Test
+    public void testSetLastNameValid() {
         actor.setLastName("Changed");
         assertTrue(actor.getLastName().equals("Changed"));
+    }
+
+    // An invalid case where last name is just an integer or real value
+    @Test
+    public void testSetLastNameInvalid(){
+        assertThrows(IllegalArgumentException.class,()->{
+            actor.setFirstName("***");
+        });
+    }
+
+    // An invalid case where last name is empty
+    @Test
+    public void testSetLastNameEmpty(){
+        assertThrows(IllegalArgumentException.class,()->{
+            actor.setLastName("");
+        });
+    }
+
+    @Test
+    public void testToString(){
+        String expectedValue = "Actor{" +
+                "id=" + actor.getId() +
+                ", firstName='" + "Harry" + '\'' +
+                ", lastName='" + "Phillips" + '\'' +
+                '}';
+        assertEquals(expectedValue,actor.toString());
     }
 }

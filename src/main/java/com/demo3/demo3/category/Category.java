@@ -29,7 +29,7 @@ public class Category {
     }
 
 
-    public Long getCategory_id() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
@@ -42,7 +42,13 @@ public class Category {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("name is null");
+        }else if(name.matches("[a-zA-Z]+")){
+            this.name = name;
+        }else{
+            throw new IllegalArgumentException("name is not a word");
+        }
     }
 
     @Override

@@ -47,14 +47,18 @@ public class Actor {
 
     public Date getLastUpdate(){return lastUpdate;}
 
-
-
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if(firstName.isEmpty()){
+            throw new IllegalArgumentException("firstName is null");
+        }else if(firstName.matches("[a-zA-Z]+")){
+            this.firstName = firstName;
+        }else{
+            throw new IllegalArgumentException("firstName is not a word");
+        }
     }
 
     public String getLastName() {
@@ -62,9 +66,14 @@ public class Actor {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if(lastName.isEmpty()){
+            throw new IllegalArgumentException("lastName is null");
+        }else if(lastName.matches("[a-zA-Z]+")){
+            this.lastName = lastName;
+        }else{
+            throw new IllegalArgumentException("lastName is not a word");
+        }
     }
-
 
     @Override
     public String toString() {
