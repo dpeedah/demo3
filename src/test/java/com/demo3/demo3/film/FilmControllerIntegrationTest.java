@@ -4,11 +4,12 @@ package com.demo3.demo3.film;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,10 +17,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = FilmController.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class FilmControllerIntegrationTest {
 
     @Autowired
@@ -47,8 +50,7 @@ public class FilmControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/films/all")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.film").exists());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -68,6 +70,8 @@ public class FilmControllerIntegrationTest {
                 Long id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
                 this.id = id;
 
+                assertTrue(id != null);
+
     }
 
     @Test
@@ -83,20 +87,20 @@ public class FilmControllerIntegrationTest {
     }
 
     @Test
-    void getFilmInvalid() throws Exception {
+    public void getFilmInvalid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/films/{id}",-2L))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void getFilmValid() throws Exception {
+    public void getFilmValid() throws Exception {
         String idstr = String.valueOf(this.id);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/films/{id}",20L))
-                .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.jsonPath(("$.id")).value(idstr));
+                .andExpect(status().isAccepted()).andExpect(MockMvcResultMatchers.jsonPath(("$.id")).value(idstr));
     }
 
     @Test
-    public void deleteEmployeeAPI() throws Exception
+    public void deleteFilm() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders.delete("/api/films/{id}", this.id) )
                 .andExpect(status().isAccepted());

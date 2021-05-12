@@ -118,7 +118,7 @@ public class Film {
     }
 
     public void setReleaseYear(Long releaseYear) {
-        if (releaseYear >= 3000L && releaseYear<=1800){
+        if (releaseYear <= 3000L && releaseYear>=1800){
             this.releaseYear = releaseYear;
         }else{
             throw new IllegalArgumentException();

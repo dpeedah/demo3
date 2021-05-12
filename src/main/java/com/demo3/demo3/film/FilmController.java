@@ -33,7 +33,7 @@ public class FilmController {
     @GetMapping(path="/{id}")
     public ResponseEntity<Film> findFilmById(@PathVariable("id") @Min(0)Long film_id){
         Film film = filmRepo.findById(film_id).get();
-        return new ResponseEntity<Film>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<Film>(film,HttpStatus.ACCEPTED);
     }
 
     @GetMapping(path="/actors_by_film/{id}")

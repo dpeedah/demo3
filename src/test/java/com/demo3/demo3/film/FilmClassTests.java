@@ -31,11 +31,12 @@ public class FilmClassTests {
     }
 
     // An invalid case where the description is just an integer or real value
-    @Test(expected = IllegalArgumentException.class)
-    public void testDescInvalid(){
+    @Test
+    public void testDescInvalid() throws Exception{
         Film film = new Film();
         film.setDescription("5555");
         String test = film.getDescription();
+        assertEquals(null,test);
     }
 
     // An invalid case where the description given is empty, but the current description is valid,
@@ -44,7 +45,7 @@ public class FilmClassTests {
     public void testDescEmpty(){
         Film film = new Film();
         film.setDescription("Valid description!");
-        film.setDescription(" ");
+        film.setDescription("");
         String test = film.getDescription();
     }
 
@@ -73,7 +74,7 @@ public class FilmClassTests {
 
     // after setting a valid length, an invalid string given afterwards should result in the same
     // length being present, and being replaced, should not change current length
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testLengthEmpty(){
         Film film = new Film();
         film.setLengthMinutes(77L);
