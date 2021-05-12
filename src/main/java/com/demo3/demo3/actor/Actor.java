@@ -47,8 +47,6 @@ public class Actor {
 
     public Date getLastUpdate(){return lastUpdate;}
 
-
-
     public String getFirstName() {
         return firstName;
     }
@@ -68,7 +66,7 @@ public class Actor {
     }
 
     public void setLastName(String lastName) {
-        if(lastName.isEmpty() && lastName.matches("[a-zA-Z]+")){
+        if(lastName.isEmpty()){
             throw new IllegalArgumentException("lastName is null");
         }else if(lastName.matches("[a-zA-Z]+")){
             this.lastName = lastName;
@@ -76,7 +74,6 @@ public class Actor {
             throw new IllegalArgumentException("lastName is not a word");
         }
     }
-
 
     @Override
     public String toString() {

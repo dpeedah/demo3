@@ -64,6 +64,7 @@ class ActorRepoTests {
         assertEquals("PENELOPE",actor.get().getFirstName());
         assertEquals("GUINESS",actor.get().getLastName());
     }
+
     @Test
     public void testFindActorByFirstNameAndLastNameFail(){
         assertThrows(IllegalArgumentException.class,()->{
@@ -79,6 +80,14 @@ class ActorRepoTests {
         Actor savedActor = actorRepo.save(actor);
         assertNotNull(actorRepo.findById(savedActor.getId()));
     }
+
+    //will test the auto generated lastupdated variable
+//    @Test
+//    public void testUpdateActor(){
+//        Actor actor = actorRepo.findById(1L).get();
+//        actor.setFirstName("Changed");
+//        actorRepo.save(actor);
+//    }
 
 
 

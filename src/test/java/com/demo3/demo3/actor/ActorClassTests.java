@@ -98,7 +98,4 @@ class ActorClassTests {
                 '}';
         assertEquals(expectedValue,actor.toString());
     }
-
-
-
 }
