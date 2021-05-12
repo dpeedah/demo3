@@ -3,6 +3,9 @@ import com.demo3.demo3.actor.Actor;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,19 +18,27 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "title required")
     @Column(name="title")
     private String title;
 
+    @NotBlank(message = "description required")
     @Column(name="description")
     private String description = " ";
 
     @Column(name = "release_year")
+    @NotBlank(message = "Release year required")
+    @Max(3000)
+    @Min(0)
     private Long releaseYear;
 
     @Column(name = "language_id")
     private Long languageId = 1L;
 
     @Column(name="length")
+    @NotBlank(message = "Length required")
+    @Max(3600)
+    @Min(1)
     private Long lengthMinutes;
 
     @Column(name = "rating")
@@ -45,6 +56,22 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     Set<Actor> allActors ;
+
+    public Film(String title, String description, Long releaseYear, Long lengthMinutes) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.lengthMinutes = lengthMinutes;
+    }
+
+    public Film(String title, String description, Long releaseYear, Long languageId, Long lengthMinutes, Ratings rating) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.languageId = languageId;
+        this.lengthMinutes = lengthMinutes;
+        this.rating = rating;
+    }
 
     public Date getLastUpdate() {
         return lastUpdate;

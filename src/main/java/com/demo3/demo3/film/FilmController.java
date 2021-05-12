@@ -2,30 +2,37 @@ package com.demo3.demo3.film;
 
 import com.demo3.demo3.actor.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
 @RequestMapping( path="api/films")
+@Validated
 public class FilmController {
     @Autowired
     private FilmRepository filmRepo;
 
-    @GetMapping(path="/all")
-    public Iterable<Film> getFilms() {
+    @GetMapping(path="/all",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Film>> getFilms() {
         Iterable<Film> a = filmRepo.findAll();
-        return filmRepo.findAll();
+        List films = (List) a;
+        return ResponseEntity.ok(films);
     }
 
-    @GetMapping(path="/byid/{id}")
-    public Optional<Film> findFilmById(@PathVariable("id") Long film_id){
-        return filmRepo.findById(film_id);
+    @GetMapping(path="/{id}")
+    public ResponseEntity<Film> findFilmById(@PathVariable("id") @Min(0)Long film_id){
+        Film film = filmRepo.findById(film_id).get();
+        return new ResponseEntity<Film>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping(path="/actors_by_film/{id}")
@@ -40,23 +47,25 @@ public class FilmController {
     }
 
     @DeleteMapping(path="/{id}")
-    public void deleteActor(@PathVariable("id") Long film_id){
+    public ResponseEntity<HttpStatus> deleteActor(@PathVariable("id") Long film_id){
         boolean exists = filmRepo.existsById(film_id);
         if (!exists){
             throw new IllegalStateException("Film with ID of " + film_id + "does not exist");
         }
         filmRepo.deleteById(film_id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/create")
-    public @ResponseBody void addFilm(@RequestBody Film film){
+    public ResponseEntity<Film>  addFilm(@Valid @RequestBody Film film){
         Film film1 = filmRepo.findFilmByTitle(film.getTitle());
         if (film1 != null){
             throw new IllegalStateException("Full name already exists");
         }
         //Actor actor1 = new Actor(firstName,lastName);
 
-        filmRepo.save(film);
+        film = filmRepo.save(film);
+        return new ResponseEntity<Film>(film,HttpStatus.CREATED);
     }
 
     @Transactional
