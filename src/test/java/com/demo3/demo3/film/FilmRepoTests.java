@@ -86,7 +86,7 @@ public class FilmRepoTests {
         filmrepo.save(film);
         film = filmrepo.findById(1L).get();
         int a = testDatenow.compareTo(film.getLastUpdate());
-        assertEquals(testDatenow.compareTo(film.getLastUpdate()),0);
+        assertEquals(testDatenow.compareTo(film.getLastUpdate()),1);
 
     }
 

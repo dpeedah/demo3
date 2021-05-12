@@ -1,9 +1,7 @@
 package com.demo3.demo3.film;
 
 import com.demo3.demo3.actor.Actor;
-import com.demo3.demo3.actor.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,7 @@ public class FilmController {
     private FilmRepository filmRepo;
 
     @GetMapping(path="/all")
-    public Iterable<Film> getFilm() {
+    public Iterable<Film> getFilms() {
         Iterable<Film> a = filmRepo.findAll();
         return filmRepo.findAll();
     }
