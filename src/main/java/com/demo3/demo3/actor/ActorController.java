@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,34 +18,37 @@ public class ActorController {
     private ActorRepository actorRepo;
 
     @GetMapping(path="/all")
-    public Iterable<Actor> getActors() {
-        return actorRepo.findAll();
+    public ResponseEntity<List<Actor>> getActors() {
+        Iterable<Actor> a = actorRepo.findAll();
+        List actors = (List) a;
+        return ResponseEntity.ok(actors);
     }
 
     @GetMapping(path="/byid/{id}")
-    public Optional<Actor> findActorById(@PathVariable("id") Long actor_id){
-        return actorRepo.findById(actor_id);
+    public ResponseEntity<Actor> findActorById(@PathVariable("id") Long actor_id){
+        Actor actor = actorRepo.findById(actor_id).get();
+        return new ResponseEntity<Actor>(actor,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path="/{id}")
-    public void deleteActor(@PathVariable("id") Long actor_id){
+    public ResponseEntity<HttpStatus> deleteActor(@PathVariable("id") Long actor_id){
         boolean exists = actorRepo.existsById(actor_id);
         if (!exists){
             throw new IllegalStateException("Actor with ID of " + actor_id + "does not exist");
         }
         actorRepo.deleteById(actor_id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody void addActor(@RequestBody Actor actor){
+    public ResponseEntity<Actor> addActor(@Valid @RequestBody Actor actor){
         Optional<Actor> actorByName = actorRepo.findActorByFirstNameAndLastName(actor.getFirstName(), actor.getLastName());
         if (actorByName.isPresent()){
             throw new IllegalStateException("Full name already exists");
         }
-        //Actor actor1 = new Actor(firstName,lastName);
-
         actorRepo.save(actor);
+        return new ResponseEntity<Actor>(actor,HttpStatus.CREATED);
     }
 
     @Transactional
