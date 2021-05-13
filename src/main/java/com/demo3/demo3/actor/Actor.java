@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
@@ -19,9 +20,11 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "first name required")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank(message = "last name required")
     @Column(name = "last_name")
     private String lastName;
 
