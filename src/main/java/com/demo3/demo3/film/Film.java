@@ -1,4 +1,6 @@
 package com.demo3.demo3.film;
+
+import org.apache.commons.lang.StringUtils;
 import com.demo3.demo3.actor.Actor;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,7 +26,7 @@ public class Film {
 
     @NotBlank(message = "description required")
     @Column(name="description")
-    private String description = " ";
+    private String description = null;
 
     @Column(name = "release_year")
     @Max(3000)
@@ -109,8 +111,11 @@ public class Film {
     }
 
     public void setDescription(String description) {
-        if (description.length() > 3){
+        if (description.length() > 3 && !StringUtils.isNumeric(description)){
             this.description = description;
+        }
+        if (description.length() == 0){
+            throw new IllegalArgumentException();
         }
 
     }
