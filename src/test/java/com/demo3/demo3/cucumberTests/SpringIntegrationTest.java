@@ -4,7 +4,6 @@ import com.demo3.demo3.Demo3Application;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @CucumberContextConfiguration
-@SpringBootTest(classes = Demo3Application.class, webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = Demo3Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class SpringIntegrationTest {
     static ResponseResults latestResponse = null;
 
@@ -50,7 +49,7 @@ public class SpringIntegrationTest {
 
         restTemplate.setErrorHandler(errorHandler);
         latestResponse = restTemplate
-                .execute("http://localhost:8082/baeldung", HttpMethod.POST, requestCallback, response -> {
+                .execute("http://localhost:8080", HttpMethod.POST, requestCallback, response -> {
                     if (errorHandler.hadError) {
                         return (errorHandler.getResults());
                     } else {
