@@ -38,6 +38,17 @@ public class FilmController {
         return new ResponseEntity<Film>(film,HttpStatus.ACCEPTED);
     }
 
+    @GetMapping(path="/exists/title/{title}")
+    public ResponseEntity<Boolean> findFilmExistsByTitle(@PathVariable("title") String title){
+        Film film = new Film();
+        film = filmRepo.findFilmByTitle(title);
+        if (film.getDescription() != null && film.getTitle().equals(title)){
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false,HttpStatus.OK);
+        }
+    }
+
     @GetMapping(path="/actors_by_film/{id}")
     public Set<Actor> findActorsByFilm(
             @PathVariable("id") Long film_id){
