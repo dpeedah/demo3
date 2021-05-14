@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.is;
 public class StepDefsIntegrationTest extends SpringIntegrationTest {
     @When("^client makes call to GET api")
     public void userGetAllFilmsValid() throws Throwable{
-        executeGet("http://localhost:8080/api/films/all");
+        executeGet("/api/films/all");
     }
 
     @When("^user calls \\/apis$")
     public void userGetAllFilmsValid2() throws Throwable{
-        executeGet("http://localhost:8080/api/films/all");
+        executeGet("/api/films/all");
     }
 
     @Then("^user receives error of code (\\d+)$")
