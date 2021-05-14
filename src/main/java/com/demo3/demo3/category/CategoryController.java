@@ -7,48 +7,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/categories")
 public class CategoryController {
+
     @Autowired
     private CategoryRepository categoryRepo;
 
     @GetMapping(path="/all")
-    public Iterable<Category> getCategories() {
-        return categoryRepo.findAll();
+    public ResponseEntity<List<Category>> getCategories() {
+        Iterable<Category> a = categoryRepo.findAll();
+        List categories = (List) a;
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping(path="/byid/{id}")
-    public Optional<Category> findCategoryById(@PathVariable("id") Long id){
-        Optional<Category> category = categoryRepo.findById(id);
-        if(category.isPresent()){
-            return category ;
-        }else{
-            throw new IllegalStateException("Category with Id: " + id + " does not exist");
-        }
+    public ResponseEntity<Category> findCategoryById(@PathVariable("id") Long category_id){
+        Category category = categoryRepo.findById(category_id).get();
+        return new ResponseEntity<Category>(category,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path="/{id}")
-    public void deleteCategory(@PathVariable("id") Long id){
-        Optional<Category> check = findCategoryById(id);
-        if(check.isPresent()){
-            categoryRepo.deleteById(id);
-        }else{
-            throw new IllegalStateException("Category with Id: " + id + " does not exist");
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("id") Long category_id){
+        boolean exists = categoryRepo.existsById(category_id);
+        if (!exists){
+            throw new IllegalStateException("Actor with ID of " + category_id + "does not exist");
         }
+        categoryRepo.deleteById(category_id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping(path="/create")
+    @PostMapping(path = "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody void addCategory(@RequestBody Category category)                                {
+    public ResponseEntity<Category> addCategory(@Valid @RequestBody Category category){
         Optional<Category> categoryByName = categoryRepo.findCategoryByName(category.getName());
-        if(categoryByName.isPresent()){
-            throw new IllegalStateException("Category with name: " + category.getName() + " already exists" );
-        }else{
-            categoryRepo.save(category);
+        if (categoryByName.isPresent()){
+            throw new IllegalStateException("Category already exists");
         }
+        categoryRepo.save(category);
+        return new ResponseEntity<Category>(category,HttpStatus.CREATED);
     }
 
     @Transactional

@@ -3,6 +3,7 @@ package com.demo3.demo3.category;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -37,6 +38,7 @@ public class Category {
         return lastUpdate;
     }
 
+    @NotBlank(message = "Name required")
     public String getName() {
         return name;
     }

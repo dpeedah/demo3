@@ -20,11 +20,11 @@ public class StepDefsIntegrationTestActors extends SpringIntegrationTest {
     @Autowired
     private ActorController actorController;
 
-    @Given("user provides an actor with a valid and unique {string} and {string}")
-    public void userDataValid(String firstName, String lastName) throws Throwable{
-        Actor actor = new Actor(firstName,lastName);
-        //make executePut work
-    }
+//    @Given("user provides an actor with a valid and unique {string} and {string}")
+//    public void userDataValid(String firstName, String lastName) throws Throwable{
+//        Actor actor = new Actor(firstName,lastName);
+//        //make executePut work
+//    }
 
     @When("user makes call to GET all actors api")
     public void userGetAllFilmsValid() throws Throwable{
