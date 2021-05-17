@@ -55,7 +55,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    Set<Actor> allActors = null;
+    Set<Actor> allActors ;
 
     public Film(String title, String description, Long releaseYear, Long lengthMinutes) {
         this.title = title;
@@ -111,12 +111,10 @@ public class Film {
     }
 
     public void setDescription(String description) {
-        if (description.length() > 3 && !StringUtils.isNumeric(description)){
-            this.description = description;
-        }
-        if (description.length() == 0){
+        if (description.length() < 3 || !StringUtils.isNumeric(description)){
             throw new IllegalArgumentException();
         }
+        this.description = description;
 
     }
 
@@ -125,11 +123,10 @@ public class Film {
     }
 
     public void setReleaseYear(Long releaseYear) {
-        if (releaseYear <= 3000L && releaseYear>=1800){
-            this.releaseYear = releaseYear;
-        }else{
+        if (releaseYear > 3000L || releaseYear<1800){
             throw new IllegalArgumentException();
         }
+        this.releaseYear = releaseYear;
     }
 
     public Long getLanguageId() {
@@ -145,11 +142,10 @@ public class Film {
     }
 
     public void setLengthMinutes(Long lengthMinutes) {
-        if (lengthMinutes >= 1 && lengthMinutes<=360){
-            this.lengthMinutes = lengthMinutes;
-        }else{
+        if (lengthMinutes < 0 || lengthMinutes > 1000){
             throw new IllegalArgumentException();
         }
+
         this.lengthMinutes = lengthMinutes;
     }
 
