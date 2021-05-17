@@ -29,24 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(null,film.getAllActors());
     }
 
-    @Test
-    public void createValid(){
-        Film film = new Film("Hello title","description",2001L,120L);
-        assertEquals(null,film.getId());
-        assertEquals("Hello title",film.getTitle());
-        assertNull(film.getRating());
-    }
-
-    @Test
-    public void createValid2(){
-        Film film = new Film("Hello title","description",2001L,120L,120L,Ratings.NC17);
-        assertEquals(null,film.getId());
-        assertEquals("Hello title",film.getTitle());
-        assertEquals(Ratings.NC17,film.getRating());
-        assertEquals(null,film.getAllActors());
-    }
-
-
 
     @Test
     public void testTitle(){

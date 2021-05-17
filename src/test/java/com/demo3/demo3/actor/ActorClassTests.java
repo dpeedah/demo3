@@ -1,6 +1,6 @@
 package com.demo3.demo3.actor;
 
-
+import com.demo3.demo3.Demo3Application;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-class ActorClassTests {
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Demo3Application.class)
+ public class ActorClassTests {
 
     private static Actor actor;
     private static final String firstName = "Harry";

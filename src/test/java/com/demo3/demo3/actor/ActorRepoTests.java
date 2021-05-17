@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ActorRepoTests {
+public class ActorRepoTests {
 
     @Autowired
     private ActorRepository actorRepo;
