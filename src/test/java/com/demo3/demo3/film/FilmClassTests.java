@@ -1,6 +1,6 @@
 package com.demo3.demo3.film;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
- class FilmClassTests {
+ public class FilmClassTests {
 
     @Test
     public void createValid(){
@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(Ratings.NC17,film.getRating());
         assertEquals(null,film.getAllActors());
     }
-
 
 
     @Test
