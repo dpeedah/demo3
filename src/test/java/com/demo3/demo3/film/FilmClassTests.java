@@ -11,6 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
  class FilmClassTests {
 
+    @Test
+    public void createValid(){
+        Film film = new Film("Hello title","description",2001L,120L);
+        assertEquals(null,film.getId());
+        assertEquals("Hello title",film.getTitle());
+        assertEquals(null,film.getRating());
+    }
+
+    @Test
+    public void createValid2(){
+        Film film = new Film("Hello title","description",2001L,120L,120L,Ratings.NC17);
+        assertEquals(null,film.getId());
+        assertEquals("Hello title",film.getTitle());
+        assertEquals(Ratings.NC17,film.getRating());
+        assertEquals(null,film.getAllActors());
+    }
+
+
 
     @Test
     public void testTitle(){
