@@ -32,6 +32,12 @@ class ActorClassTests {
     }
 
     @Test
+    public void testConstructor(){
+        Actor actor = new Actor("Constructor", "Test");
+        assertTrue(actor.getFirstName().equals("Constructor")&&actor.getLastName().equals("Test"));
+    }
+
+    @Test
     public void testGetFirstName(){
         assertEquals(firstName,actor.getFirstName());
     }
