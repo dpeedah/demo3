@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Film film = new Film("Hello title","description",2001L,120L);
         assertEquals(null,film.getId());
         assertEquals("Hello title",film.getTitle());
-        assertEquals(null,film.getRating());
+        assertNull(film.getRating());
     }
 
     @Test
