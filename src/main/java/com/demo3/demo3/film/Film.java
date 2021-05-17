@@ -55,7 +55,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    Set<Actor> allActors ;
+    Set<Actor> allActors = null;
 
     public Film(String title, String description, Long releaseYear, Long lengthMinutes) {
         this.title = title;
