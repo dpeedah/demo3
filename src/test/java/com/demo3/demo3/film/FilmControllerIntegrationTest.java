@@ -4,8 +4,9 @@ package com.demo3.demo3.film;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -58,10 +59,10 @@ public class FilmControllerIntegrationTest {
     }
 
     @Test
-    @Before
+    @BeforeAll
     public void createFilmValid() throws Exception
     {
-        Film a = new Film("TESTING" + randomisedKeyStr, "A TEST DESC", 2005L, 105L);
+        Film a = new Film("TESTINGGG" + randomisedKeyStr, "A TEST DESC", 2005L, 105L);
 
         MvcResult result= mockMvc.perform( MockMvcRequestBuilders
                 .post("/api/films/create")
@@ -69,7 +70,7 @@ public class FilmControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("TESTING"+randomisedKeyStr))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("TESTINGGG"+randomisedKeyStr))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("A TEST DESC"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.releaseYear").value(2005))
                 .andReturn();
@@ -77,12 +78,12 @@ public class FilmControllerIntegrationTest {
                 int newid = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
                 this.id = Integer.toUnsignedLong(newid);
 
-                assertTrue(id != null);
+                assertNotNull(this.id);
 
 
     }
 
-    @Test
+    @AfterAll
     public void createFilmNull() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
