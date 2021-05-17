@@ -1,6 +1,5 @@
 package com.demo3.demo3.actor;
 
-import com.demo3.demo3.category.Category;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -80,7 +79,7 @@ public class ActorControllerIntegrationTests {
     {
         mockMvc.perform( MockMvcRequestBuilders
                 .post("/api/actors/create")
-                .content(asJsonString(new Category(" ")))
+                .content(asJsonString(new Actor(" "," ")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
