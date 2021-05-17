@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CategoryClassTests {
+public class CategoryClassTests {
 
     private static Category category;
     private static final String name = "Anime";

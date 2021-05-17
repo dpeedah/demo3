@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CategoryRepoTests {
+public class CategoryRepoTests {
     @Autowired
     private CategoryRepository categoryRepo;
 
