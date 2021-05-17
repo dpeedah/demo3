@@ -61,7 +61,7 @@ public class FilmController {
     }
 
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<HttpStatus> deleteActor(@PathVariable("id") Long film_id){
+    public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") Long film_id){
         boolean exists = filmRepo.existsById(film_id);
         if (!exists){
             throw new IllegalStateException("Film with ID of " + film_id + "does not exist");
@@ -73,8 +73,8 @@ public class FilmController {
     @PostMapping(path = "/create")
     public ResponseEntity<Film>  addFilm(@Valid @RequestBody Film film){
         Film film1 = filmRepo.findFilmByTitle(film.getTitle());
-        if (film1 != null){
-            throw new IllegalStateException("Full name already exists");
+        if (film1 == null){
+            //
         }
         //Actor actor1 = new Actor(firstName,lastName);
 
