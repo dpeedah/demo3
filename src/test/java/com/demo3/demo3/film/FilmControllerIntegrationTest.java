@@ -3,7 +3,6 @@ package com.demo3.demo3.film;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -83,7 +82,6 @@ public class FilmControllerIntegrationTest {
 
     }
 
-    @AfterAll
     public void createFilmNull() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
@@ -108,7 +106,7 @@ public class FilmControllerIntegrationTest {
     }
 
     @Test
-    @After
+    @AfterAll
     public void deleteFilm() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders.delete("/api/films/{id}", this.id) )
