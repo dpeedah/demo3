@@ -27,6 +27,9 @@ class CategoryClassTests {
     void beforeEachTest(){
         category.setName(name);
     }
+
+
+
     @Test
     public void testGetName(){
         assertEquals(name,category.getName());
