@@ -27,7 +27,7 @@ import java.util.Map;
 public class SpringIntegrationTest {
     static ResponseResults latestResponse = null;
     static HttpEntity<Film> latestFilmentity = null;
-    static String baseUrl = "http://localhost:8080";
+    static String baseUrl = "http://localhost:80";
     @Autowired
     protected RestTemplate restTemplate;
 
