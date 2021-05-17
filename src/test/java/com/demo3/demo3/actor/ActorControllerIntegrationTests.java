@@ -1,5 +1,6 @@
 package com.demo3.demo3.actor;
 
+import com.demo3.demo3.category.Category;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,24 +27,65 @@ public class ActorControllerIntegrationTests {
     private ObjectMapper mapper;
 
     @Test
-    public void testActorGetAllValid() throws Exception{
+    public void testGetActorAllValid() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/actors/all")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
-    /*@Test
-    public void testActorCreateValid() throws Exception
+    @Test
+    public void testGetActorByIdValid() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/actors/byid/"+1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void testGetActorByIdInvalid() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/actors/byid/"+0.1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testCreateValidActor() throws Exception
     {
+        Actor actor = new Actor("kjerlkbf","grgeg");
         mockMvc.perform( MockMvcRequestBuilders
                 .post("/api/actors/create")
-                .content(asJsonString(new Actor("Harryyy","Phillipsss")))
+                .content(asJsonString(actor))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-    }*/
+
+    }
+
+    @Test
+    public void testCreateInvalidActor() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .post("/api/actors/create")
+                .content(asJsonString(new Actor("123","123")))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testCreateEmptyActors() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .post("/api/actors/create")
+                .content(asJsonString(new Category(" ")))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
 
     public static String asJsonString(final Object obj) {
         try {
@@ -50,6 +93,15 @@ public class ActorControllerIntegrationTests {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    @Test
+    public void testDeleteActors() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .delete("/api/actors/",7))
+                .andExpect(status().isAccepted());
     }
 
 }
