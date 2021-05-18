@@ -52,7 +52,7 @@ public class ActorControllerIntegrationTests {
     @Test
     public void testCreateValidActor() throws Exception
     {
-        Actor actor = new Actor("kjerlkbf","grgeg");
+        Actor actor = new Actor("kjegrlkbf","grgveg");
         mockMvc.perform( MockMvcRequestBuilders
                 .post("/api/actors/create")
                 .content(asJsonString(actor))
