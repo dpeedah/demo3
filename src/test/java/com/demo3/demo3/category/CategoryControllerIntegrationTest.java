@@ -1,7 +1,10 @@
 package com.demo3.demo3.category;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,9 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -24,6 +30,9 @@ public class CategoryControllerIntegrationTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    private static Long id;
+
 
     @Test
     public void testGetCategoryAllValid() throws Exception{
@@ -50,16 +59,31 @@ public class CategoryControllerIntegrationTest {
     }
 
     @Test
+    @BeforeAll
     public void testCreateValidCategory() throws Exception
     {
-        Category category = new Category("kjerlkbf");
-        mockMvc.perform( MockMvcRequestBuilders
+        //code to randomly generate the name
+        Random rand = new Random();
+        String randomString = "abc";
+        for(int i=0;i<10;i++){
+            char c = (char)(rand.nextInt(26) + 'a');
+            randomString = randomString + String.valueOf(c);
+        }
+
+        Category category = new Category("random"+randomString);
+        MvcResult result = mockMvc.perform( MockMvcRequestBuilders
                 .post("/api/categories/create")
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.categoryId").exists());
+                .andReturn();
+
+
+        int newid = JsonPath.read(result.getResponse().getContentAsString(), "$.categoryId");
+        this.id = Integer.toUnsignedLong(newid);
+
+        assertNotNull(this.id);
 
     }
 
@@ -96,10 +120,11 @@ public class CategoryControllerIntegrationTest {
 
 
     @Test
+    @AfterAll
     public void testDeleteCategory() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .delete("/api/categories/",7))
+                .delete("/api/categories/{id}",this.id))
                 .andExpect(status().isAccepted());
     }
 }
