@@ -32,7 +32,7 @@ public class ActorControllerIntegrationTest {
     @Autowired
     private ObjectMapper mapper;
 
-    private static Long actorsId;
+    private static Long id;
 
     @Test
     public void testGetActorAllValid() throws Exception{
@@ -81,9 +81,9 @@ public class ActorControllerIntegrationTest {
 
 
         int newid = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        this.actorsId = Integer.toUnsignedLong(newid);
+        this.id = Integer.toUnsignedLong(newid);
 
-        assertNotNull(this.actorsId);
+        assertNotNull(this.id);
     }
 
     @Test
@@ -120,10 +120,10 @@ public class ActorControllerIntegrationTest {
 
     @Test
     @AfterAll
-    public void testDeleteActors() throws Exception
+    public void testDeleteCategory() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .delete("/api/actors/{id}",this.actorsId))
+                .delete("/api/actors/{id}",this.id))
                 .andExpect(status().isAccepted());
     }
 }
