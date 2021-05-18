@@ -1,63 +1,43 @@
 package com.demo3.demo3.actor;
 
 import com.demo3.demo3.Demo3Application;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = Demo3Application.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Demo3Application.class)
  public class ActorClassTests {
-
-    private static Actor actor;
-    private static final String firstName = "Harry";
-    private static final String lastName = "Phillips";
-
-    //before testing starts make the actor
-    @BeforeAll
-    static void beforeAllTests(){
-        actor = new Actor(firstName,lastName);
-    }
-
-    //before each test set the name back to default incase previous tests changed it
-    @BeforeEach
-    void beforeEachTest(){
-        actor.setFirstName(firstName);
-        actor.setLastName(lastName);
-    }
-
-    @Test
-    public void testConstructor(){
-        Actor actor = new Actor("Constructor", "Test");
-        assertTrue(actor.getFirstName().equals("Constructor")&&actor.getLastName().equals("Test"));
-    }
 
     @Test
     public void testGetFirstName(){
-        assertEquals(firstName,actor.getFirstName());
+        Actor actor = new Actor("first", "last");
+        assertEquals(actor.getFirstName(),"first");
     }
 
     @Test
     public void testGetLastName(){
-        assertEquals(lastName,actor.getLastName());
+        Actor actor = new Actor("first", "last");
+        assertEquals(actor.getLastName(),"last");
     }
 
     @Test
     public void testSetFirstNameValid() {
+        Actor actor = new Actor("first", "last");
         actor.setFirstName("Changed");
-        assertTrue(actor.getFirstName().equals("Changed"));
+        assertEquals(actor.getFirstName(),"Changed");
     }
 
     // An invalid case where first name is just an integer or real value
     @Test
     public void testSetFirstNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
-                actor.setFirstName("***");
+            Actor actor = new Actor();
+            actor.setFirstName("***");
         });
     }
 
@@ -65,20 +45,23 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     public void testSetFirstNameEmpty(){
         assertThrows(IllegalArgumentException.class,()->{
+            Actor actor = new Actor();
             actor.setFirstName("");
         });
     }
 
     @Test
     public void testSetLastNameValid() {
+        Actor actor = new Actor("first", "last");
         actor.setLastName("Changed");
-        assertTrue(actor.getLastName().equals("Changed"));
+        assertEquals(actor.getLastName(),"Changed");
     }
 
     // An invalid case where last name is just an integer or real value
     @Test
     public void testSetLastNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
+            Actor actor = new Actor();
             actor.setLastName("***");
         });
     }
@@ -87,16 +70,18 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     public void testSetLastNameEmpty(){
         assertThrows(IllegalArgumentException.class,()->{
+            Actor actor = new Actor();
             actor.setLastName("");
         });
     }
 
     @Test
     public void testToString(){
+        Actor actor = new Actor("first", "last");
         String expectedValue = "Actor{" +
                 "id=" + actor.getId() +
-                ", firstName='" + "Harry" + '\'' +
-                ", lastName='" + "Phillips" + '\'' +
+                ", firstName='" + "first" + '\'' +
+                ", lastName='" + "last" + '\'' +
                 '}';
         assertEquals(expectedValue,actor.toString());
     }
