@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Demo3Application.class)
- public class ActorClassTests {
+ public class ActorClassTest {
 
     @Test
     public void testGetFirstName(){

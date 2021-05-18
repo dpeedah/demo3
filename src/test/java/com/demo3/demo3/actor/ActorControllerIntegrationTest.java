@@ -1,26 +1,23 @@
-package com.demo3.demo3.category;
+package com.demo3.demo3.actor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CategoryControllerIntegrationTests {
+public class ActorControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,60 +26,60 @@ public class CategoryControllerIntegrationTests {
     private ObjectMapper mapper;
 
     @Test
-    public void testGetCategoryAllValid() throws Exception{
+    public void testGetActorAllValid() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/categories/all")
+                .get("/api/actors/all")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetCategoryByIdValid() throws Exception{
+    public void testGetActorByIdValid() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/categories/byid/"+1)
+                .get("/api/actors/byid/"+1)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted());
     }
 
     @Test
-    public void testGetCategoryByIdInvalid() throws Exception{
+    public void testGetActorByIdInvalid() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/categories/byid/"+0.1)
+                .get("/api/actors/byid/"+0.1)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void testCreateValidCategory() throws Exception
+    public void testCreateValidActor() throws Exception
     {
-        Category category = new Category("kjerlkbf");
+        Actor actor = new Actor("kjegrlkbf","grgveg");
         mockMvc.perform( MockMvcRequestBuilders
-                .post("/api/categories/create")
-                .content(asJsonString(category))
+                .post("/api/actors/create")
+                .content(asJsonString(actor))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.categoryId").exists());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 
     }
 
     @Test
-    public void testCreateInvalidCategory() throws Exception
+    public void testCreateInvalidActor() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .post("/api/categories/create")
-                .content(asJsonString(new Category("123")))
+                .post("/api/actors/create")
+                .content(asJsonString(new Actor("123","123")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void testCreateEmptyCategory() throws Exception
+    public void testCreateEmptyActors() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .post("/api/categories/create")
-                .content(asJsonString(new Category(" ")))
+                .post("/api/actors/create")
+                .content(asJsonString(new Actor(" "," ")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -99,10 +96,11 @@ public class CategoryControllerIntegrationTests {
 
 
     @Test
-    public void testDeleteCategory() throws Exception
+    public void testDeleteActors() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .delete("/api/categories/",7))
+                .delete("/api/actors/",7))
                 .andExpect(status().isAccepted());
     }
+
 }
