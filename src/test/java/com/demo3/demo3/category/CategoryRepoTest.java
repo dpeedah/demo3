@@ -1,8 +1,6 @@
 package com.demo3.demo3.category;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,26 +15,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class CategoryRepoTest {
+
     @Autowired
     private CategoryRepository categoryRepo;
-
-    private static Category category;
-    private static final String name = "Anime";
-
-    //before testing starts make the category
-    @BeforeAll
-    static void beforeAllTests(){
-        category = new Category(name);
-    }
-
-    //before each test set the name back to default incase previous tests changed it
-    @BeforeEach
-    void beforeEachTest(){
-        category.setName(name);
-    }
 
     @Test
     public void testGetId(){

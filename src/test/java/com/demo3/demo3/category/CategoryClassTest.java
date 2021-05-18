@@ -1,49 +1,35 @@
 package com.demo3.demo3.category;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.demo3.demo3.Demo3Application;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Demo3Application.class)
 public class CategoryClassTest {
-
-    private static Category category;
-    private static final String name = "Anime";
-
-    //before testing starts make the category
-    @BeforeAll
-    static void beforeAllTests(){
-        category = new Category(name);
-    }
-
-    //before each test set the name back to default incase previous tests changed it
-    @BeforeEach
-    void beforeEachTest(){
-        category.setName(name);
-    }
-
 
 
     @Test
     public void testGetName(){
-        assertEquals(name,category.getName());
+        Category category = new Category("name");
+        assertEquals("name",category.getName());
     }
 
     @Test
     public void testSetNameValid(){
+        Category category = new Category("name");
         category.setName("Changed");
-        assertTrue(category.getName().equals("Changed"));
+        assertEquals("Changed",category.getName());
     }
 
     @Test
     public void testSetNameInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
+            Category category = new Category("name");
             category.setName("123");
         });
     }
@@ -51,15 +37,17 @@ public class CategoryClassTest {
     @Test
     public void testSetNameEmpty(){
         assertThrows(IllegalArgumentException.class,()->{
+            Category category = new Category("name");
             category.setName("");
         });
     }
 
     @Test
     public void testToString(){
+        Category category = new Category("name");
         String expectedValue = "Category{" +
                 "category_id=" + category.getCategoryId() +
-                ", name='" + name + '\'' +
+                ", name='" + category.getName() + '\'' +
                 '}';
         assertEquals(expectedValue,category.toString());
     }
