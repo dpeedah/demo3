@@ -1,8 +1,6 @@
 package com.demo3.demo3.actor;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,32 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ActorRepoTests {
+public class ActorRepoTests {
 
     @Autowired
     private ActorRepository actorRepo;
 
-    private static Actor actor;
-    private static final String firstName = "Harry";
-    private static final String lastName = "Phillips";
-
-    //before testing starts make the actor
-    @BeforeAll
-    static void beforeAllTests(){
-        actor = new Actor(firstName,lastName);
-    }
-
-    //before each test set the name back to default incase previous tests changed it
-    @BeforeEach
-    void beforeEachTest(){
-        actor.setFirstName(firstName);
-        actor.setLastName(lastName);
-    }
-
     @Test
     public void testGetId(){
         Optional<Actor> actor = actorRepo.findById(1L);
-        assertTrue(actor.get().getId().equals(1L));
+        assertEquals(actor.get().getId(),1L);
     }
 
     @Test
@@ -89,7 +70,4 @@ class ActorRepoTests {
         actor = actorRepo.findById(1L).get();
         assertEquals(testDatenow.compareTo(actor.getLastUpdate()),1);
     }
-
-
-
 }

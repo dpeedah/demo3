@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FilmRepoTests {
+public class FilmRepoTest {
     @Autowired
     private FilmRepository filmrepo;
 
