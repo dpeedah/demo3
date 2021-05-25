@@ -39,13 +39,13 @@ public class FilmController {
     }
 
     @GetMapping(path="/exists/title/{title}")
-    public ResponseEntity<Boolean> findFilmExistsByTitle(@PathVariable("title") String title){
+    public ResponseEntity<Boolean> findFilmUniqueByTitle(@PathVariable("title") String title){
         Film film = new Film();
         film = filmRepo.findFilmByTitle(title);
-        if (film.getDescription() != null && film.getTitle().equals(title)){
-            return new ResponseEntity<>(true,HttpStatus.OK);
-        }else{
+        if (film.getId()!= null && film.getTitle().equals(title)){
             return new ResponseEntity<>(false,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(true,HttpStatus.OK);
         }
     }
 
@@ -72,10 +72,10 @@ public class FilmController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<Film>  addFilm(@Valid @RequestBody Film film){
-        Film film1 = filmRepo.findFilmByTitle(film.getTitle());
+        /*Film film1 = filmRepo.findFilmByTitle(film.getTitle());
         if (film1 == null){
             //
-        }
+        }*/
         //Actor actor1 = new Actor(firstName,lastName);
 
         film = filmRepo.save(film);
@@ -83,7 +83,7 @@ public class FilmController {
     }
 
     @Transactional
-    @PutMapping(path ="{id}",
+    @PutMapping(path ="/update/{id}",
             consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
 
@@ -108,7 +108,8 @@ public class FilmController {
         }
 
         String rating = null;
-        if (json.containsKey("rating")){
+        if (json.containsKey("rating"))
+        {
             rating = json.get("rating");
         }
 
@@ -129,8 +130,7 @@ public class FilmController {
             film.setRating(Ratings.fromString(rating));
         }
         final Film savedFilm = filmRepo.save(film);
-        return ResponseEntity.ok(savedFilm);
-
+        return new ResponseEntity<Film>(savedFilm,HttpStatus.OK);
 
     }
 

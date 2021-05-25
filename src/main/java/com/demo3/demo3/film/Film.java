@@ -26,7 +26,7 @@ public class Film {
 
     @NotBlank(message = "description required")
     @Column(name="description")
-    private String description = null;
+    private String description;
 
     @Column(name = "release_year")
     @Max(3000)
@@ -111,7 +111,7 @@ public class Film {
     }
 
     public void setDescription(String description) {
-        if (description.length() < 3 || !StringUtils.isNumeric(description)){
+        if (description.length() < 3 || StringUtils.isNumeric(description)){
             throw new IllegalArgumentException();
         }
         this.description = description;

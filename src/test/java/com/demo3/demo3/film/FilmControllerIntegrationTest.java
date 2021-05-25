@@ -3,10 +3,10 @@ package com.demo3.demo3.film;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +22,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -58,8 +60,7 @@ public class FilmControllerIntegrationTest {
     }
 
     @Test
-    @BeforeAll
-    public void createFilmValid() throws Exception
+    public void test_a_createFilmValid() throws Exception
     {
         Film a = new Film("TESTINGGG" + randomisedKeyStr, "A TEST DESC", 2005L, 105L);
 
@@ -82,10 +83,33 @@ public class FilmControllerIntegrationTest {
 
     }
 
+    @Test
+    public void test_b_updateFilmValid() throws Exception
+    {
+        String updateUrl = "/api/films/update/{id}";
+        Film a = new Film("TESTING HAS UPDATED" + randomisedKeyStr, "A TEST DESC 2", 2012L, 105L);
+        int id = this.id.intValue();
+        MvcResult result= mockMvc.perform( MockMvcRequestBuilders
+                .put(updateUrl,id)
+                .content(asJsonString(a))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("TESTING HAS UPDATED"+randomisedKeyStr))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("A TEST DESC 2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.releaseYear").value(2012))
+                .andReturn();
+
+        assertNotNull(this.id);
+
+
+    }
+
+    @Test
     public void createFilmNull() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders
-                .put("/api/films/create")
+                .post("/api/films/create")
                 .content(asJsonString(new Film()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -106,8 +130,7 @@ public class FilmControllerIntegrationTest {
     }
 
     @Test
-    @AfterAll
-    public void deleteFilm() throws Exception
+    public void test_z_deleteFilm() throws Exception
     {
         mockMvc.perform( MockMvcRequestBuilders.delete("/api/films/{id}", this.id) )
                 .andExpect(status().isAccepted());
