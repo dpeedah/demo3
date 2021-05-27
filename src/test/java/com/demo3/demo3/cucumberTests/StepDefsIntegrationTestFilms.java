@@ -6,12 +6,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-
-import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -44,18 +40,14 @@ public class StepDefsIntegrationTestFilms extends SpringIntegrationTest {
 
     @And("film with title {string} is unique")
     public void filmUnique(String title) throws Throwable{
-        executeGet("/api/films/all");
+        String url = "/exists/title/" + title;
+        executeGet(url);
         String body = latestResponse.getBody();
-        JSONObject json = new JSONObject(body);
-        Iterator x = json.keys();
-        JSONArray jsonArray = new JSONArray();
-        while (x.hasNext()){
-            String key = (String) x.next();
-            jsonArray.put(json.get(key));
-        }
-        boolean notUnique = jsonArray.toString().contains("\"title\":\""+title+"\"");
-        assertThat("reason", notUnique,is(false));
+        Boolean unique = Boolean.parseBoolean(body);
+        assertThat("Film is not unique",unique);
     }
+
+
 
 }
 
