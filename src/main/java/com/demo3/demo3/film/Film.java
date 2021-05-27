@@ -1,7 +1,7 @@
 package com.demo3.demo3.film;
 
-import org.apache.commons.lang.StringUtils;
 import com.demo3.demo3.actor.Actor;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -56,6 +56,7 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     Set<Actor> allActors ;
+
 
     public Film(String title, String description, Long releaseYear, Long lengthMinutes) {
         this.title = title;
