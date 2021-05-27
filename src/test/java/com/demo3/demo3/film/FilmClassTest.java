@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Film film = new Film("Hello title","description",2001L,120L);
         assertEquals(null,film.getId());
         assertEquals("Hello title",film.getTitle());
-        assertNull(film.getRating());
+        assertEquals(Ratings.G,film.getRating());
     }
 
     @Test
@@ -51,10 +51,11 @@ import static org.junit.jupiter.api.Assertions.*;
     // An invalid case where the description is just an integer or real value
     @Test
     public void testDescInvalid() throws Exception{
-        Film film = new Film();
-        film.setDescription("5555");
-        String test = film.getDescription();
-        assertNull(test);
+        assertThrows(IllegalArgumentException.class,()->{
+            Film film = new Film();
+            film.setDescription("5555");
+            String test = film.getDescription();
+        });
     }
 
     // An invalid case where the description given is empty, but the current description is valid,
