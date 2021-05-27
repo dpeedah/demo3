@@ -26,7 +26,7 @@ public class Film {
 
     @NotBlank(message = "description required")
     @Column(name="description")
-    private String description;
+    private String description = null;
 
     @Column(name = "release_year")
     @Max(3000)

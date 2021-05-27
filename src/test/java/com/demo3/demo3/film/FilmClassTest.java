@@ -117,7 +117,7 @@ import static org.junit.jupiter.api.Assertions.*;
     public void testLengthInvalid(){
         assertThrows(IllegalArgumentException.class,()->{
             Film film = new Film();
-            film.setLengthMinutes(600L);
+            film.setLengthMinutes(12000L);
         });
     }
 
