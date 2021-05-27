@@ -1,6 +1,7 @@
 package com.demo3.demo3.film;
 
 import com.demo3.demo3.actor.Actor;
+import com.demo3.demo3.category.Category;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -56,6 +57,14 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     Set<Actor> allActors ;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "film_category",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    Set<Category> allCategories ;
 
 
     public Film(String title, String description, Long releaseYear, Long lengthMinutes) {

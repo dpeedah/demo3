@@ -1,10 +1,12 @@
 package com.demo3.demo3.category;
 
+import com.demo3.demo3.film.Film;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="category")
@@ -22,7 +24,18 @@ public class Category {
     @Column(name = "last_update")
     private Date lastUpdate;
 
+    @ManyToMany(mappedBy = "allCategories")
+    Set<Film> films;
+
     public Category() {
+    }
+
+    public Set<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<Film> films) {
+        this.films = films;
     }
 
     public Category(String name) {
