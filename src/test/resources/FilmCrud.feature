@@ -15,9 +15,6 @@ Feature: GET for Films
       | 10  | 202 |
       | 1000|500  |
       |12000 | 500|
-      | five | 400 |
-      | RUN  | 400 |
-
  # Scenario Outline : A user attempts to add a unique film to the database
    # Given the user provides a valid film "<title>", "<description>", <lengthMinutes>,  and <year> of release
    # And film with title "<title>" is unique
