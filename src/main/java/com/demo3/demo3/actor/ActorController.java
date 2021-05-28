@@ -20,24 +20,26 @@ public class ActorController {
     @GetMapping(path="/all")
     public ResponseEntity<List<Actor>> getActors() {
         Iterable<Actor> a = actorRepo.findAll();
-        List actors = (List) a;
+        List<Actor> actors = (List) a;
         return ResponseEntity.ok(actors);
     }
 
     @GetMapping(path="/byid/{id}")
-    public ResponseEntity<Actor> findActorById(@PathVariable("id") Long actor_id){
-        Actor actor = actorRepo.findById(actor_id).get();
-        return new ResponseEntity<Actor>(actor,HttpStatus.ACCEPTED);
+    public ResponseEntity<Actor> findActorById(@PathVariable("id") Long actorId){
+        Actor actor = actorRepo.findById(actorId).get();
+        ResponseEntity<Actor> actor_response = new ResponseEntity<Actor>(actor,HttpStatus.ACCEPTED);
+        return actor_response;
     }
 
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<HttpStatus> deleteActor(@PathVariable("id") Long actor_id){
-        boolean exists = actorRepo.existsById(actor_id);
+    public ResponseEntity<HttpStatus> deleteActor(@PathVariable("id") Long actorId){
+        boolean exists = actorRepo.existsById(actorId);
         if (!exists){
-            throw new IllegalStateException("Actor with ID of " + actor_id + "does not exist");
+            throw new IllegalStateException("Actor with ID of " + actorId + "does not exist");
         }
-        actorRepo.deleteById(actor_id);
-        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+        actorRepo.deleteById(actorId);
+        ResponseEntity<HttpStatus> actor_response = new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+        return actor_response;
     }
 
     @PostMapping(path = "/create")
@@ -48,15 +50,16 @@ public class ActorController {
             throw new IllegalStateException("Full name already exists");
         }
         actorRepo.save(actor);
-        return new ResponseEntity<Actor>(actor,HttpStatus.CREATED);
+        ResponseEntity<Actor> actor_response = new ResponseEntity<Actor>(actor,HttpStatus.CREATED);
+        return actor_response;
     }
 
     @Transactional
     @PutMapping(path ="{id}")
-    public ResponseEntity<Actor> updateActor(@PathVariable("id") Long actor_id,
+    public ResponseEntity<Actor> updateActor(@PathVariable("id") Long actorId,
                               @RequestParam(required = false) String name,
                               @RequestParam (required = false) String lName){
-        Actor actor = actorRepo.findById(actor_id).orElseThrow( () -> new IllegalStateException("Actor with Id" + actor_id + "does not exist"));
+        Actor actor = actorRepo.findById(actorId).orElseThrow( () -> new IllegalStateException("Actor with Id" + actorId + "does not exist"));
         if  (name != null && name.length() > 0){
             actor.setFirstName(name);
         }
