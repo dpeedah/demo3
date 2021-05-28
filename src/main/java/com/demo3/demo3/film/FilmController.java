@@ -35,7 +35,7 @@ public class FilmController {
     @GetMapping(path="/{id}")
     public ResponseEntity<Film> findFilmById(@PathVariable("id") @Min(0)Long filmId){
         Film film = filmRepo.findById(filmId).get();
-        return new ResponseEntity<Film>(film,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(film,HttpStatus.ACCEPTED);
     }
 
     @GetMapping(path="/exists/title/{title}")
@@ -53,9 +53,9 @@ public class FilmController {
     public Set<Actor> findActorsByFilm(
             @PathVariable("id") Long filmId){
         Set returnSet = null;
-        Film filma = filmRepo.findById(filmId).orElse(null);
-        if(filma != null){
-            returnSet = filma.getAllActors();
+        Film filmA = filmRepo.findById(filmId).orElse(null);
+        if(filmA != null){
+            returnSet = filmA.getAllActors();
         }
         return returnSet;
     }
@@ -67,7 +67,7 @@ public class FilmController {
             throw new IllegalStateException("Film with ID of " + filmId + "does not exist");
         }
         filmRepo.deleteById(filmId);
-        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/create")
@@ -79,7 +79,7 @@ public class FilmController {
         //Actor actor1 = new Actor(firstName,lastName);
 
         film = filmRepo.save(film);
-        return new ResponseEntity<Film>(film,HttpStatus.CREATED);
+        return new ResponseEntity<>(film,HttpStatus.CREATED);
     }
 
     @Transactional

@@ -25,9 +25,9 @@ public class GlobalControllerExceptionHandler {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            FieldError field_err = (FieldError) error;
-            String fieldName = field_err.getField();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            FieldError fieldErr = (FieldError) error;
+            String fieldName = fieldErr.getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });

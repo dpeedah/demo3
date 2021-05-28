@@ -27,8 +27,7 @@ public class ActorController {
     @GetMapping(path="/byid/{id}")
     public ResponseEntity<Actor> findActorById(@PathVariable("id") Long actorId){
         Actor actor = actorRepo.findById(actorId).get();
-        ResponseEntity<Actor> actor_response = new ResponseEntity<Actor>(actor,HttpStatus.ACCEPTED);
-        return actor_response;
+        return new ResponseEntity<>(actor,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path="/{id}")
@@ -38,8 +37,7 @@ public class ActorController {
             throw new IllegalStateException("Actor with ID of " + actorId + "does not exist");
         }
         actorRepo.deleteById(actorId);
-        ResponseEntity<HttpStatus> actor_response = new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
-        return actor_response;
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/create")
@@ -50,8 +48,7 @@ public class ActorController {
             throw new IllegalStateException("Full name already exists");
         }
         actorRepo.save(actor);
-        ResponseEntity<Actor> actor_response = new ResponseEntity<Actor>(actor,HttpStatus.CREATED);
-        return actor_response;
+        return new ResponseEntity<>(actor,HttpStatus.CREATED);
     }
 
     @Transactional

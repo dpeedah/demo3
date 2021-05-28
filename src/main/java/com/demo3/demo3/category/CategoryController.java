@@ -20,15 +20,14 @@ public class CategoryController {
     @GetMapping(path="/all")
     public ResponseEntity<List<Category>> getCategories() {
         Iterable<Category> a = categoryRepo.findAll();
-        List categories = (List) a;
+        List<Category> categories = (List) a;
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping(path="/byid/{id}")
     public ResponseEntity<Category> findCategoryById(@PathVariable("id") Long categoryId){
         Category category = categoryRepo.findById(categoryId).get();
-        ResponseEntity<Category> response_entity = new ResponseEntity<Category>(category,HttpStatus.ACCEPTED);
-        return response_entity;
+        return new ResponseEntity<>(category,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path="/{id}")
@@ -38,7 +37,7 @@ public class CategoryController {
             throw new IllegalStateException("Actor with ID of " + categoryId + "does not exist");
         }
         categoryRepo.deleteById(categoryId);
-        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/create")
@@ -49,7 +48,7 @@ public class CategoryController {
             throw new IllegalStateException("Category already exists");
         }
         categoryRepo.save(category);
-        return new ResponseEntity<Category>(category,HttpStatus.CREATED);
+        return new ResponseEntity<>(category,HttpStatus.CREATED);
     }
 
     @Transactional
