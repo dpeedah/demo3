@@ -69,7 +69,7 @@ public class FilmRepoTest {
         Film film = new Film();
         film.setTitle("TEST TITLE 101");
         film.setDescription("Testing Description");
-        film.setReleaseYear(25L);
+        film.setReleaseYear(2005L);
         film.setLengthMinutes(200L);
         Film savedFilm = filmrepo.save(film);
         Long id = savedFilm.getId();
