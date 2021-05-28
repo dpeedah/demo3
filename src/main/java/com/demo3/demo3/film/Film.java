@@ -43,7 +43,7 @@ public class Film {
     private Long lengthMinutes;
 
     @Column(name = "rating")
-    private Ratings rating;
+    private Ratings rating = Ratings.G;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)

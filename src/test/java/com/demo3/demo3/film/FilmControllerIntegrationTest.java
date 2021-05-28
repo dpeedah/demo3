@@ -129,6 +129,12 @@ public class FilmControllerIntegrationTest {
                 .andExpect(status().isAccepted()).andExpect(MockMvcResultMatchers.jsonPath(("$.id")).value(20L));
     }
 
+    /*Test
+    public void getFilmsByYearValid() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/films/exists/release/{year}",2005L))
+                .andExpect(status().isAccepted());
+    }*/
+
     @Test
     public void test_z_deleteFilm() throws Exception
     {

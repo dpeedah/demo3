@@ -30,13 +30,13 @@ public class Category {
     public Category() {
     }
 
-    public Set<Film> getFilms() {
+    /*public Set<Film> getFilms() {
         return films;
     }
 
     public void setFilms(Set<Film> films) {
         this.films = films;
-    }
+    }*/
 
     public Category(String name) {
         this.name = name;

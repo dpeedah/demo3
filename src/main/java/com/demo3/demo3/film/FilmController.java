@@ -48,6 +48,17 @@ public class FilmController {
         }
     }
 
+    /*@GetMapping(path="/exists/release/{year}")
+    public ResponseEntity<List<Film>> getFilmsByYear(@PathVariable("year") Long year){
+        if ( year <= 1 || year>= 2021){
+            throw new IllegalStateException("Year invalid, no books");
+        }
+        Iterable<Film> filmI = filmRepo.findFilmsByReleaseYear(year);
+        List<Film> films = (List) filmI;
+        return new ResponseEntity<>(films,HttpStatus.ACCEPTED);
+    }*/
+
+
     @GetMapping(path="/actors_by_film/{id}")
     public Set<Actor> findActorsByFilm(
             @PathVariable("id") Long filmId){
