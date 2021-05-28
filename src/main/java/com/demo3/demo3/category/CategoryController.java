@@ -1,6 +1,5 @@
 package com.demo3.demo3.category;
 
-import com.demo3.demo3.actor.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,18 +25,19 @@ public class CategoryController {
     }
 
     @GetMapping(path="/byid/{id}")
-    public ResponseEntity<Category> findCategoryById(@PathVariable("id") Long category_id){
-        Category category = categoryRepo.findById(category_id).get();
-        return new ResponseEntity<Category>(category,HttpStatus.ACCEPTED);
+    public ResponseEntity<Category> findCategoryById(@PathVariable("id") Long categoryId){
+        Category category = categoryRepo.findById(categoryId).get();
+        ResponseEntity<Category> response_entity = new ResponseEntity<Category>(category,HttpStatus.ACCEPTED);
+        return response_entity;
     }
 
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("id") Long category_id){
-        boolean exists = categoryRepo.existsById(category_id);
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("id") Long categoryId){
+        boolean exists = categoryRepo.existsById(categoryId);
         if (!exists){
-            throw new IllegalStateException("Actor with ID of " + category_id + "does not exist");
+            throw new IllegalStateException("Actor with ID of " + categoryId + "does not exist");
         }
-        categoryRepo.deleteById(category_id);
+        categoryRepo.deleteById(categoryId);
         return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 

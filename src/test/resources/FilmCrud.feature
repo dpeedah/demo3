@@ -1,10 +1,19 @@
-Feature: CRUD for Films
+Feature: GET for Films
   Scenario : user makes a call to GET /apis
     When user calls /apis
     Then user receives error of code 200
   Scenario: client makes call to GET api
     When user calls /apis
     Then user receives error of code 200
+
+  Scenario Outline: user makes call to GET film by id api
+    When user makes call to GET film by <id> api
+    Then user receives response code <code>
+
+    Examples:
+      | id  | code|
+      | 10  | 202 |
+      | 1000|500  |
 
  # Scenario Outline : A user attempts to add a unique film to the database
    # Given the user provides a valid film "<title>", "<description>", <lengthMinutes>,  and <year> of release

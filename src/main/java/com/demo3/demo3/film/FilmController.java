@@ -33,8 +33,8 @@ public class FilmController {
     }
 
     @GetMapping(path="/{id}")
-    public ResponseEntity<Film> findFilmById(@PathVariable("id") @Min(0)Long film_id){
-        Film film = filmRepo.findById(film_id).get();
+    public ResponseEntity<Film> findFilmById(@PathVariable("id") @Min(0)Long filmId){
+        Film film = filmRepo.findById(filmId).get();
         return new ResponseEntity<Film>(film,HttpStatus.ACCEPTED);
     }
 
@@ -51,9 +51,9 @@ public class FilmController {
 
     @GetMapping(path="/actors_by_film/{id}")
     public Set<Actor> findActorsByFilm(
-            @PathVariable("id") Long film_id){
+            @PathVariable("id") Long filmId){
         Set returnSet = null;
-        Film filma = filmRepo.findById(film_id).orElse(null);
+        Film filma = filmRepo.findById(filmId).orElse(null);
         if(filma != null){
             returnSet = filma.getAllActors();
         }
@@ -61,12 +61,12 @@ public class FilmController {
     }
 
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") Long film_id){
-        boolean exists = filmRepo.existsById(film_id);
+    public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") Long filmId){
+        boolean exists = filmRepo.existsById(filmId);
         if (!exists){
-            throw new IllegalStateException("Film with ID of " + film_id + "does not exist");
+            throw new IllegalStateException("Film with ID of " + filmId + "does not exist");
         }
-        filmRepo.deleteById(film_id);
+        filmRepo.deleteById(filmId);
         return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 
@@ -87,9 +87,9 @@ public class FilmController {
             consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
 
-    public ResponseEntity<Film> updateActor(@PathVariable("id") Long film_id,
+    public ResponseEntity<Film> updateActor(@PathVariable("id") Long filmId,
                                       @RequestBody Map<String,String> json) {
-        Film film = filmRepo.findById(film_id).orElseThrow(() -> new IllegalStateException("Film with Id" + film_id + "does not exist"));
+        Film film = filmRepo.findById(filmId).orElseThrow(() -> new IllegalStateException("Film with Id" + filmId + "does not exist"));
         String title = null;
         if (json.containsKey("title")){
              title = json.get("title");
