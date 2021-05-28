@@ -28,7 +28,7 @@ public class FilmController {
     @GetMapping(path="/all",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Film>> getFilms() {
         Iterable<Film> a = filmRepo.findAll();
-        List films = (List) a;
+        List<Film> films = (List) a;
         return ResponseEntity.ok(films);
     }
 
@@ -40,8 +40,7 @@ public class FilmController {
 
     @GetMapping(path="/exists/title/{title}")
     public ResponseEntity<Boolean> findFilmUniqueByTitle(@PathVariable("title") String title){
-        Film film = new Film();
-        film = filmRepo.findFilmByTitle(title);
+        Film film = filmRepo.findFilmByTitle(title);
         if (film.getId()!= null && film.getTitle().equals(title)){
             return new ResponseEntity<>(false,HttpStatus.OK);
         }else{
@@ -52,7 +51,7 @@ public class FilmController {
     @GetMapping(path="/actors_by_film/{id}")
     public Set<Actor> findActorsByFilm(
             @PathVariable("id") Long filmId){
-        Set returnSet = null;
+        Set<Actor> returnSet = null;
         Film filmA = filmRepo.findById(filmId).orElse(null);
         if(filmA != null){
             returnSet = filmA.getAllActors();
@@ -72,12 +71,6 @@ public class FilmController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<Film>  addFilm(@Valid @RequestBody Film film){
-        /*Film film1 = filmRepo.findFilmByTitle(film.getTitle());
-        if (film1 == null){
-            //
-        }*/
-        //Actor actor1 = new Actor(firstName,lastName);
-
         film = filmRepo.save(film);
         return new ResponseEntity<>(film,HttpStatus.CREATED);
     }

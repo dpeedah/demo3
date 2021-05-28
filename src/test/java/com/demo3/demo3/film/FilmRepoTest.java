@@ -64,12 +64,18 @@ public class FilmRepoTest {
         assertEquals(testDate.compareTo(filmDate),0);
     }
 
-    /*@Test
-    public void testCreateTrue(){
-        Film film = new Film("TEST TITLE 101","Testing Description", 101L, 200L);
+    @Test
+    public void testCreateTrue() throws Exception{
+        Film film = new Film();
+        film.setTitle("TEST TITLE 101");
+        film.setDescription("Testing Description");
+        film.setReleaseYear(101L);
+        film.setLengthMinutes(200L);
         Film savedFilm = filmrepo.save(film);
-        assertNotNull(filmrepo.findById(savedFilm.getId()).get());
-    }*/
+        Long id = savedFilm.getId();
+        filmrepo.deleteById(id);
+        assertNotNull(id);
+    }
 
     @Test
     public void testUpdate(){
