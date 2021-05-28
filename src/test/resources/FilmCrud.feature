@@ -6,15 +6,15 @@ Feature: GET for Films
     When user calls /apis
     Then user receives error of code 200
 
-  Scenario Outline: user makes call to GET film by id api
-    When user makes call to GET film by <id> api
-    Then user receives response code <code>
+  #Scenario Outline: user makes call to GET film by id api
+   # When user makes call to GET film by <id> api
+    #Then user receives response code <code>
 
-    Examples:
-      | id  | code|
-      | 10  | 202 |
-      | 1000|500  |
-      |12000 | 500|
+    #Examples:
+     # | id  | code|
+      #| 10  | 202 |
+      #| 1000|500  |
+      #|12000 | 500|
  # Scenario Outline : A user attempts to add a unique film to the database
    # Given the user provides a valid film "<title>", "<description>", <lengthMinutes>,  and <year> of release
    # And film with title "<title>" is unique
