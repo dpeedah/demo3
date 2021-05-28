@@ -48,7 +48,7 @@ public class StepDefsIntegrationTestFilms extends SpringIntegrationTest {
     }
 
 
-    @When("user makes call to GET film by {int} api")
+/*    @When("user makes call to GET film by {int} api")
     public void userGetAllFilmsValidById(int id) throws Throwable{
         executeGet("/api/films/"+id);
     }
@@ -58,7 +58,7 @@ public class StepDefsIntegrationTestFilms extends SpringIntegrationTest {
     public void userReceives_Code2(int statusCode) throws Throwable{
         final HttpStatus code = latestResponse.getTheResponse().getStatusCode();
         assertThat("code incorrect" + latestResponse.getBody(),code.value(),is(statusCode));
-    }
+    }*/
 
 
 
