@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
 @RestController
 @RequestMapping( path="api/actors")
 public class ActorController {
