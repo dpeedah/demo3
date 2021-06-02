@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequestMapping( path="api/films")
 @Validated
