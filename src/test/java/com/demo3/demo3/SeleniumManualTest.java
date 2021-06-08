@@ -33,5 +33,6 @@ public class SeleniumManualTest {
         actorsEditPageObj.submit();
         Thread.sleep(4000);
         driver.quit();
+
     }
 }
