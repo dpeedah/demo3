@@ -1,0 +1,29 @@
+package com.demo3.demo3.pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class ActorEditPage {
+    WebDriver driver;
+    By firstNameTextBox= By.id("firstName");
+    By lastNameTextBox= By.id("lastName");
+    //    By submitButton= By.cssSelector("button[class='btn btn-primary']");
+    By submitButton= By.xpath("//button[text()='Save']");
+
+    public ActorEditPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+
+    public void firstNameText(String firstName){
+        driver.findElement(firstNameTextBox).sendKeys(firstName);
+    }
+
+    public void lastNameText(String lastName){
+        driver.findElement(lastNameTextBox).sendKeys(lastName);
+    }
+
+    public void submit(){
+        driver.findElement(submitButton).click();
+    }
+}
