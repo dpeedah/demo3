@@ -18,7 +18,7 @@ public class SeleniumTest {
     public void initDriver(){
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
-        driver.get("http://e2eprojectui.s3-website.eu-west-2.amazonaws.com/");
+        driver.get("http://3.8.24.96:3000/");
         driver.manage().window().maximize();
     }
 
@@ -33,7 +33,7 @@ public class SeleniumTest {
         HomePage homePageObj = new HomePage(driver);
         homePageObj.clickActors();
         String url = driver.getCurrentUrl();
-        assertEquals(url,"http://e2eprojectui.s3-website.eu-west-2.amazonaws.com/actors");
+        assertEquals(url,"http://3.8.24.96:3000/actors");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class SeleniumTest {
         ActorPage actorsPageObj = new ActorPage(driver);
         actorsPageObj.openEditPage(1);
         String url = driver.getCurrentUrl();
-        assertEquals(url,"http://e2eprojectui.s3-website.eu-west-2.amazonaws.com/actors/edit/1");
+        assertEquals(url,"http://3.8.24.96:3000/actors/edit/1");
     }
 
     @After
