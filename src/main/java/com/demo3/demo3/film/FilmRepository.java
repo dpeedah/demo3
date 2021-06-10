@@ -6,6 +6,7 @@ public interface FilmRepository extends CrudRepository<Film,Long> {
    Iterable <Film> findFilmsByTitleContains(String title);
    Film findFilmByTitle(String title);
    Iterable <Film> findFilmsByReleaseYear(Long year);
+
    Iterable <Film> findFilmsByRating(Ratings rating);
 
 }

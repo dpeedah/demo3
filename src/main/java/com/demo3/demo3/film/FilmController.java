@@ -61,14 +61,14 @@ public class FilmController {
 
 
     @GetMapping(path="/actors_by_film/{id}")
-    public Set<Actor> findActorsByFilm(
+    public ResponseEntity<Set<Actor>> findActorsByFilm(
             @PathVariable("id") Long filmId){
         Set<Actor> returnSet = null;
         Film filmA = filmRepo.findById(filmId).orElse(null);
         if(filmA != null){
             returnSet = filmA.getAllActors();
         }
-        return returnSet;
+        return new ResponseEntity<>(returnSet,HttpStatus.OK);
     }
 
     @DeleteMapping(path="/{id}")
