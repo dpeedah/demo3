@@ -10,17 +10,16 @@ Feature: Using Selenium
       |actors|
       |categories|
       |films|
-      |invalid|
 
 
-  Scenario Template: user edits entity firstname
+  Scenario Template: user edits actor firstname
     Given user goes to the site
     When user clicks on actor button
-    And user clicks edit on id <id>
-    And user enters "<name>" into firstname box and submits
-    Then firstname for <id> is updated with "<name>"
+    And user clicks edit on actor with id <id>
+    And user enters "<firstname>" into firstname textbox and clicks submits
+    Then the firstname for actor <id> is updated to "<firstname>"
 
     Examples:
-      |name|id|
+      |firstname|id|
       |harry|1 |
       |peedah|2|

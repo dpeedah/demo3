@@ -58,14 +58,14 @@ public class StepDefsSelenium {
         homePageObj.clickActors();
     }
 
-    @And("user clicks edit on id {int}")
+    @And("user clicks edit on actor with id {int}")
     public void openEdit(int id) throws InterruptedException {
         ActorPage actorPageObj = new ActorPage(driver);
         Thread.sleep(1000);
         actorPageObj.openEditPage(id);
     }
 
-    @And("user enters {string} into firstname box and submits")
+    @And("user enters {string} into firstname textbox and clicks submits")
     public void openEdit(String firstname) throws InterruptedException {
         ActorEditPage actorEditPageObj = new ActorEditPage(driver);
         actorEditPageObj.clearFirstNameText();
@@ -75,7 +75,7 @@ public class StepDefsSelenium {
         actorEditPageObj.submit();
     }
 
-    @Then("firstname for {int} is updated with {string}")
+    @Then("the firstname for actor {int} is updated to {string}")
     public void firstIsNameUpdated(int id, String firstname) throws InterruptedException {
         By newfirstName = By.cssSelector("#root > div > div > table > tbody > tr:nth-child("+id+") > td:nth-child(2)");
         Thread.sleep(1000);
