@@ -23,7 +23,7 @@ public class SeleniumTest {
     }
 
     @Test
-    public void correctPage(){
+    public void openHomePage(){
         String title = driver.getTitle();
         assertEquals(title,"Testing Project");
     }
@@ -40,7 +40,7 @@ public class SeleniumTest {
     public void openActorsEdit() throws InterruptedException {
         HomePage homePageObj = new HomePage(driver);
         homePageObj.clickActors();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         ActorPage actorsPageObj = new ActorPage(driver);
         actorsPageObj.openEditPage(1);
         String url = driver.getCurrentUrl();
