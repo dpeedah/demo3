@@ -35,11 +35,4 @@ public class ActorEditPage {
         driver.findElement(submitButton).click();
     }
 
-    public String getFirstNameTextBox() {
-        return driver.findElement(firstNameTextBox).getText();
-    }
-
-    public String getLastNameTextBox() {
-        return driver.findElement(lastNameTextBox).getText();
-    }
 }

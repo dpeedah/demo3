@@ -52,6 +52,12 @@ public class StepDefsSelenium {
         }
     }
 
+    @When("user clicks on actor button")
+    public void openList(){
+        HomePage homePageObj = new HomePage(driver);
+        homePageObj.clickActors();
+    }
+
     @And("user clicks edit on id {int}")
     public void openEdit(int id) throws InterruptedException {
         ActorPage actorPageObj = new ActorPage(driver);
@@ -61,7 +67,6 @@ public class StepDefsSelenium {
 
     @And("user enters {string} into firstname box and submits")
     public void openEdit(String firstname) throws InterruptedException {
-
         ActorEditPage actorEditPageObj = new ActorEditPage(driver);
         actorEditPageObj.clearFirstNameText();
         Thread.sleep(1000);
