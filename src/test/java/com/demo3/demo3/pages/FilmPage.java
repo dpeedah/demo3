@@ -2,6 +2,7 @@ package com.demo3.demo3.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class FilmPage {
     WebDriver driver;
@@ -18,7 +19,8 @@ public class FilmPage {
     }
 
     public void openFilmActorsPage(int id){
-        By seeActorsButton = By.xpath("//a[@href='/films/actors/"+id+"']");
+        WebElement a = driver.findElement(By.xpath("//a[@href='/films/actors/"+id+"']"));
+        a.click();
     }
 
     public void openAddPage(int id){

@@ -52,8 +52,9 @@ public class StepDefsSelenium {
     }
 
     @Then("{string} page opens")
-    public void somethingelseee(String entity){
+    public void somethingelseee(String entity) throws InterruptedException {
         String url = driver.getCurrentUrl();
+        Thread.sleep(5000);
         assertEquals(url,"http://3.8.24.96:3000/" + entity);
     }
 
@@ -63,7 +64,8 @@ public class StepDefsSelenium {
     }
 
     @And("user clicks on show actors of film {int}")
-    public void userClicksOnShowActorsOfFilmId(int id) {
+    public void userClicksOnShowActorsOfFilmId(int id) throws InterruptedException {
+        Thread.sleep(5000);
         FilmPage filmpage = new FilmPage(driver);
         filmpage.openFilmActorsPage(id);
     }
@@ -72,5 +74,12 @@ public class StepDefsSelenium {
     public void oneOrMoreActorsDisplayed() {
         FilmActorPage filmActorPage = new FilmActorPage(driver);
         assertTrue(filmActorPage.countReturned() > 0);
+    }
+
+    @Then("{string} page opens for film {int}")
+    public void pageOpensForFilmId(String arg0, int arg01) throws InterruptedException {
+        String url = driver.getCurrentUrl();
+        Thread.sleep(1000);
+        assertEquals(url,"http://3.8.24.96:3000/" + arg0 + "/" + arg01 );
     }
 }

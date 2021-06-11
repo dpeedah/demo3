@@ -4,7 +4,7 @@ Feature: Using Selenium
     Given user goes to the site
     When user clicks on "<entity>" button
     And user clicks on show actors of film <id>
-    Then "<landing>" page opens
+    Then "<landing>" page opens for film <id>
     And one or more actors displayed
 
     Examples:
