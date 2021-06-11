@@ -3,6 +3,7 @@ package com.demo3.demo3.cucumberTests;
 import com.demo3.demo3.pages.HomePage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -57,5 +58,14 @@ public class StepDefsSelenium {
     @After
     public void tearDown(){
         driver.quit();
+    }
+
+    @And("user clicks on show actors of film {int}")
+    public void userClicksOnShowActorsOfFilmId() {
+        
+    }
+
+    @And("one or more actors displayed")
+    public void oneOrMoreActorsDisplayed() {
     }
 }
