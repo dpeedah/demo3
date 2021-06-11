@@ -27,7 +27,7 @@ public class StepDefsSelenium {
 
     @Given("user goes to the site")
     public void something(){
-        driver.get("http://e2eprojectui.s3-website.eu-west-2.amazonaws.com/");
+        driver.get("http://3.8.24.96:3000/");
         String title = driver.getTitle();
         assertEquals(title,"Testing Project");
     }
@@ -52,7 +52,7 @@ public class StepDefsSelenium {
     @Then("{string} page opens")
     public void somethingelseee(String entity){
         String url = driver.getCurrentUrl();
-        assertEquals(url,"http://e2eprojectui.s3-website.eu-west-2.amazonaws.com/" + entity);
+        assertEquals(url,"http://3.8.24.96:3000/" + entity);
     }
 
     @After
