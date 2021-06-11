@@ -1,5 +1,7 @@
 package com.demo3.demo3.cucumberTests;
 
+import com.demo3.demo3.pages.FilmActorPage;
+import com.demo3.demo3.pages.FilmPage;
 import com.demo3.demo3.pages.HomePage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -61,11 +63,14 @@ public class StepDefsSelenium {
     }
 
     @And("user clicks on show actors of film {int}")
-    public void userClicksOnShowActorsOfFilmId() {
-        
+    public void userClicksOnShowActorsOfFilmId(int id) {
+        FilmPage filmpage = new FilmPage(driver);
+        filmpage.openFilmActorsPage(id);
     }
 
     @And("one or more actors displayed")
     public void oneOrMoreActorsDisplayed() {
+        FilmActorPage filmActorPage = new FilmActorPage(driver);
+        assertTrue(filmActorPage.countReturned() > 0);
     }
 }
